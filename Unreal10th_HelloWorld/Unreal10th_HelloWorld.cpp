@@ -6,6 +6,7 @@
 
 int main()  // 코드의 시작점
 {
+	printf("안녕 안녕 안녕\n");
 	printf("안녕하세요 Git branch!\n");
 }
 
