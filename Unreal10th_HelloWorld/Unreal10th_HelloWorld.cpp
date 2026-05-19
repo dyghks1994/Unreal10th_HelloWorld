@@ -1,4 +1,4 @@
-﻿// Unreal10th_HelloWorld.cpp : 이 파일에는 'main' 함수가 포함됩니다. 거기서 프로그램 실행이 시작되고 종료됩니다.
+// Unreal10th_HelloWorld.cpp : 이 파일에는 'main' 함수가 포함됩니다. 거기서 프로그램 실행이 시작되고 종료됩니다.
 //
 
 #include <iostream>
@@ -7,201 +7,243 @@
 int main()  // 코드의 시작점
 {
 	/*
-	int Number = 10;	// 대입 연산자로 Number에 10을 넣었다.
-	printf("Number = %d\n", Number);
-	printf("Number = %5d\n", Number); // Number를 정수 5자리로 출력해라
-	Number = 20;		// 대입 연산자로 Number에 20을 넣었다.(덮어써진다)
-	printf("Number = %d\n", Number);
-	Number = 5 + 10;	// 산술 연산자 +를 이용해서 5와 10을 더하고 그 결과를 Number에 대입한다.
-	printf("Number = %d\n", Number);
-	Number = 7 % 3;		// 산술 연산자 %를 이용해서 7을 3으로 나눈 나머지를 구하고(1) 그 결과를 Number에 대입한다.
+	// 조건문 간단 실습
+	// 1. 숫자를 입력 받아 양수인지 음수인지 0인지 판단하는 코드
+	int Num = 0;
+	printf("양수인지 음수인지 확인할 숫자 입력 = ");
+	std::cin >> Num;
 
-	int Temp1 = 7;
+	if (Num > 0)		// 조건문에서는 항상 범위가 큰 것을 먼저 체크하는 것이 좋다.
+	{
+		printf("%d = 양수 \n", Num);
+	}
+	else if (Num < 0)
+	{
+		printf("%d = 음수 \n", Num);
+	}
+	else
+	{
+		printf("%d = 0 \n", Num);
+	}
+	
+	
+	// 2. 숫자를 입력 받아 홀수인지 짝수인지 판단하는 코드
+	int Num2 = 0;
+	printf("홀수/짝수 확인 할 숫자 입력 = ");
+	std::cin >> Num2;
 
-	Number += Temp1;	// Number와 Temp1의 값을 더하고 그 결괄를 Number에 덮어쓴다. (Number = 8)
-	printf("Number = %d\n", Number);
-	Number *= Temp1;	// Number와 Temp1의 값을 곱하고 그 결괄를 Number에 덮어쓴다. (Number = 56)
-	printf("Number = %d\n", Number);
+	switch (Num2 % 2)
+	{
+	case 0:
+		printf("%d = 짝수\n\n", Num2);
+		break;
 
-	Number--;	// (Number = 55)
-	Number--;	// (Number = 54)
-	Number--;	// (Number = 53)
-	printf("Number = %d\n", Number);
+	case 1:
+		printf("%d = 홀수\n\n", Num2);
+		break;
+	}
+
+	// 3. 두 수를 입력 받아 더 큰 수를 출력하는 코드, 같을 경우 같다고 출력
+	int Num3 = 0, Num4 = 0;
+	printf("크기 비교 할 숫자 2개 입력 = ");
+	std::cin >> Num3 >> Num4;
+
+	if (Num3 > Num4)
+	{
+		printf("Num3(%d) 가 더 크다\n", Num3);
+	}
+	else if (Num3 < Num4)
+	{
+		printf("Num4(%d) 가 더 크다\n", Num4);
+	}
+	else
+	{
+		printf("Num3(%d) == Num4(%d) \n\n", Num3, Num4);
+	}
+
+
+	// 논리 연산자 간단 실습
+	// 1. 나이와 키를 입력 받아, 6세 이상, 120cm 이상일 때 롤러코스터 탑승 가능, 그 외에는 불가능으로 출력하기
+	int age = 0, height = 0;
+	printf("나이와 키를 순서대로 입력 = ");
+	std::cin >> age >> height;
+
+	if (age >= 6 && height >= 120)
+	{
+		printf("나이 = %d세, 키 %dcm -> 롤로코스터 탑승 가능\n\n", age, height);
+	}
+	else
+	{
+		printf("나이 = %d세, 키 %dcm -> 롤로코스터 탑승 불가능\n\n", age, height);
+	}
+	
+	// 2. 점수를 입력 받아 90점 이상은 A, 80점 이상은 B, 70점 이상은 C, 60점 이상은 D, 그 이하는 F라고 출력하기
+	int Score = 0;
+	printf("점수 입력 = ");
+	std::cin >> Score;
+
+	if (Score >= 90)
+	{
+		printf("점수 = %d, A학점\n\n", Score);
+	}
+	else if (Score >= 80)
+	{
+		printf("점수 = %d, B학점\n\n", Score);
+	}
+	else if (Score >= 70)
+	{
+		printf("점수 = %d, C학점\n\n", Score);
+	}
+	else if (Score >= 60)
+	{
+		printf("점수 = %d, D학점\n\n", Score);
+	}
+	else
+	{
+		printf("점수 = %d, F학점\n\n", Score);
+	}
+
+	// 3. 세 과목의 점수를 입력 받아 세 과목의 평균점이 60점 이상이면 "합격", 아니면 "불합격"을 출력하는 프로그램을 작성하기
+	//		한 과목이라도 40점 미만이면 불합격 출력하기
+	int Score2 = 0, Score3 = 0, Score4 = 0;
+	float average = 0.0f;
+
+	printf("세 과목 점수 입력 = ");
+	std::cin >> Score2 >> Score3 >> Score4;
+
+	average = (float)(Score2 + Score3 + Score4) / 3.0f;
+
+	if (Score2 < 40 || Score3 < 40 || Score4 < 40)
+	{
+		printf("Score2 = %d, Score3 = %d, Score4 = %d, 평균 = %.2f 과락", Score2, Score3, Score4, average);
+	}
+	else if(average < 60.0f)
+	{
+		printf("Score2 = %d, Score3 = %d, Score4 = %d, 평균 = %.2f 불합격", Score2, Score3, Score4, average);
+	}
+	else
+	{
+		printf("Score2 = %d, Score3 = %d, Score4 = %d, 평균 = %.2f 합격", Score2, Score3, Score4, average);
+	}
 	*/
 
-	/*
-	// 간단 실습
-	// - 두 수를 입력받아 스왑하기
-	printf("두 수를 입력 받아 스왑하기\n");
-	int num1 = 0;
-	int num2 = 0;
-	printf("num1 입력 = ");
-	std::cin >> num1;
 
-	printf("num2 입력 = ");
-	std::cin >> num2;
+	// 5/19 실습
+	//  1. 세 수 중 최댓값과 최솟값 찾기
+	//  	3개의 정수를 입력받아, 그중 가장 큰 수와 가장 작은 수를 출력
 
-	int temp = 0;
-	temp = num1;
-	num1 = num2;
-	num2 = temp;
+	printf("1. 세 수 중 최댓값과 최솟값 찾기 \n");
+	int a = 0, b = 0, c = 0;
 
-	printf("Swap 후 num1 = [%d], num2 = [%d] \n\n", num1, num2);
+	printf("정수 3개 입력 = ");
+	std::cin >> a >> b >> c;
 
-	//////////////////////////////////////////////////////////////////////////////
-	
-	// - 두 수를 입력받아 합을 출력하기
-	printf("두 수를 입력 받아 합을 출력하기\n");
-	int num3 = 0;
-	int num4 = 0;
-	printf("num3 입력 = ");
-	std::cin >> num3;
-	printf("num4 입력 = ");
-	std::cin >> num4;
-	printf("num3 + num4 = %d \n\n", num3 + num4);
+	if (a >= b && a >= c)
+	{
+		printf("최댓값 = %d \n\n", a);
+	}
+	else if (b >= a && b >= c)
+	{
+		printf("최댓값 = %d \n\n", b);
+	}
+	else
+	{
+		printf("최댓값 = %d \n\n", c);
+	}
 
-	//////////////////////////////////////////////////////////////////////////////
-	
-	// - 사각형의 가로, 세로를 입력받아 넓이를 출력하기
-		printf("사각형의 가로, 세로를 입력받아 넓이를 출력하기\n");
-	int width = 0;
-	int height = 0;
-
-	printf("넓이 입력 = ");
-	std::cin >> width;
-	printf("높이 입력 = ");
-	std::cin >> height;
-	printf("사각형의 넓이 = %d \n\n", width * height);
-
-	//////////////////////////////////////////////////////////////////////////////
-
-	// - 두 수를 입력받아 나머지를 출력하기(% 연산자를 사용한 것과 안 한것 모두)
-	printf("두 수를 입력받아 나머지를 출력하기(%% 연산자를 사용한 것과 안 한것 모두)\n");
-	printf("1. %연산자 사용\n");
-	int a = 0;
-	int b = 0;
-	printf("숫자a 입력 = ");
-	std::cin >> a;
-	printf("숫자b 입력 = ");
-	std::cin >> b;
-	printf("a %% b = %d \n\n", a % b);
-
-	printf("2. %%연산자 미사용 ver\n");
-	printf("%d - (%d / %d) * %d = %d \n\n", a, a, b, b, a - (a / b) * b);
+	if (a <= b && a <= c)
+	{
+		printf("최소값 = %d \n\n", a);
+	}
+	else if (b <= a && b <= c)
+	{
+		printf("최소값 = %d \n\n", b);
+	}
+	else
+	{
+		printf("최소값 = %d \n\n", c);
+	}
 
 
-	/////////////////////////////////////////////////////////////////////////////
-	*/
+	//  2. 세 개의 선분 길이를 입력받아, 이 선분들로 삼각형을 만들 수 있는지 판별하기
+	//  	조건 : 삼각형이 되려면 '한 변의 길이 < 나머지 두 변의 길이의 합'이어야 함.
+	printf("2. 세 개의 선분 길이를 입력 받아 이 선분들로 삼각형을 만들 수 있는지 판별하기 \n");
 
-	
-	//	1. 온도 변환기 
-	//	설명: 섭씨 온도를 정수로 입력받아 화씨 온도로 변환하여 출력하는 프로그램.
-	//	공식: 화씨 = 섭씨 * 9 / 5 + 32
-	printf("1. 온도 변환기 \n");
-	printf("섭씨 온도 정수 입력 = ");
-	int Celsius = 0;
-	std::cin >> Celsius;
+	int LineA = 0, LineB = 0, LineC = 0;
+	printf("세 개의 선분 길이 입력 = ");
+	std::cin >> LineA >> LineB >> LineC;
 
-	int Fahrenheit = Celsius * 9 / 5 + 32;
-	printf("화씨 온도 = F˚%d\n\n", Fahrenheit);
+	if ( (LineA < LineB + LineC) && (LineB < LineA + LineC) && (LineC < LineA + LineB))
+	{
+		printf(" 삼각형 가능\n\n");		
+	}
+	else
+	{
+		printf(" 삼각형 불가능\n\n");
+	}
+			
+	//  3. 미니 계산기
+	//  	두 개의 정수와 하나의 연산자(+, -, *, / )를 입력받아 결과를 출력
+	//  	단, 나눗셈에서 0으로 나누려고 하면 "0으로 나눌 수 없습니다"라는 에러 메시지를 출력
+	printf("3. 미니 계산기 \n");
+	int Number1 = 0, Number2 = 0;
+	char Operator = '\0';
 
+	printf("두개의 정수와 연산자를 입력하시오 = ");
+	std::cin >> Number1 >> Operator >> Number2;
 
+	switch (Operator)
+	{
+	case '+':
+		printf("%d %c %d = %d\n\n", Number1, Operator, Number2, Number1 + Number2);
+		break;
 
-	//	2. 시간 계산기
-	//	초를 입력 받아 시분초 출력하기
-	printf("2. 시간 계산기 \n");
-	int Time = 0;
-	int Hour = 0;
-	int Minute = 0;
-	int Seconds = 0;
+	case '-':
+		printf("%d %c %d = %d\n\n", Number1, Operator, Number2, Number1 - Number2);
+		break;
 
-	printf("시간 초 입력 = ");	
-	std::cin >> Time;			// 초단위 입력
-	
-	Hour = Time / 3600;			// 시간 계산 1시간 = 3600초
-	
-	Time %= 3600;				// 분 계산 시간 제외하고 60초로 나누기
-								// Time -= Hour * 3600; 도 가능
-	Minute = Time / 60;
+	case '*':
+		printf("%d %c %d = %d\n\n", Number1, Operator, Number2, Number1 * Number2);
+		break;
 
-	Seconds = Time % 60;		// 초 계산, 나머지
-								// Time -= Minute * 60; 도 가능
+	case '/':
+		if (Number2 == 0)
+		{
+			printf("0으로 나눌 수 없습니다. \n\n");
+		}
+		else
+		{
+			printf("%d %c %d = %f\n\n", Number1, Operator, Number2, (float)(Number1 / Number2));
+		}
+		break;
 
-	printf("Hour = %d, Minute = %d, Seconds = %d \n\n", Hour, Minute, Seconds);
-
-
-	//	3. 동전 개수 계산하기
-	//	금액을 입력받아 500원, 100원, 50원, 10원 동전이 각각 몇 개 필요한지 계산하는 프로그램.
-	//	금액이 큰 동전을 최대한 많이 받아야 한다.
-	printf("3. 동전 개수 계산하기 \n");
-	printf("금액 입력 = ");
-	int Money = 0;
-	std::cin >> Money;
-
-	int Coin500 = 0, Coin100 = 0, Coin50 = 0, Coin10 = 0;
-	Coin500 = Money / 500;
-	Money -= 500 * Coin500;
-
-	Coin100 = Money / 100;
-	Money -= 100 * Coin100;
-
-	Coin50  = Money / 50;
-	Money -= 50 * Coin50;
-
-	Coin10  = Money / 10;
-	Money -= 10 * Coin10;
-
-	printf("500 = %d, 100 = %d, 50 = %d, 10 = %d \n\n", Coin500, Coin100, Coin50, Coin10);
-
-	
-	//	4. 자리수 분리하기(입력은 항상 세자리라고 가정)
-	//	수를 입력받고 100의 자리, 10의 자리, 1의 자리를 각각 출력하기
-	//	각 자리의 수를 합해서 출력하기
-	printf("4. 자리수 분리하기(입력은 항상 세자리라고 가정) \n");
-	int num = 0;
-	std::cin >> num;
-
-	int units = 0, tens = 0, hundreds = 0;
-	
-	hundreds = num / 100;
-	num %= 100;
-
-	tens = num / 10;
-	num %= 10;
-
-	units = num;
-
-	printf("100의자리 = %d, 10의자리 = %d, 1의자리 = %d \n\n", hundreds, tens, units);
-	printf("각 자리수의 합 = %d \n\n", hundreds + tens + units);
-		
-	//	5. 파일 용량 환산기
-	//	메가바이트(MB) 단위의 파일 크기를 입력받아, 킬로바이트(KB)와 바이트(Byte) 단위로 환산해 출력하는 프로그램
-	//	공식: 1MB = 1024KB, 1KB = 1024Byte
-	printf("5. 파일 용량 환산기 \n");
-	printf("MB 입력 = ");
-	int MB = 0, KB = 0, Byte = 0;
-	std::cin >> MB;
-
-	KB = MB * 1024;
-	Byte = KB * 1024;
-
-	printf("%dMB = %dKB = %dByte", MB, KB, Byte);
+	default:
+	{
+		printf("잘못 입력했습니다. \n\n");
+	}
+	}
 
 
-	//	6. 타일 개수 계산기 (면적 구하기)
-	//	직사각형 방의 가로, 세로 길이(cm)를 입력받고, 가로 30cm, 세로 30cm인 타일로 이 방을 채우려면 타일이 총 몇 개 필요한지 출력하기
-	printf("6. 타일 개수 계산기 (면적 구하기) \n");
-	
-	int Width = 0, Height = 0;
-	int TileSize = 30;
 
-	printf("가로, 세로 입력 = ");
-	std::cin >> Width >> Height;
+	//  4. 윤년 판별기
+	//  	연도(예 : 2024)를 입력받아 그 해가 윤년인지 평년인지 출력
+	//  	윤년의 조건 :
+	//			연도가 4로 나누어 떨어지면 윤년이다.
+	//  		하지만 100으로 나누어 떨어지면 평년이다.
+	//  		그럼에도 400으로 나누어 떨어지면 윤년이다.
+	printf("4. 윤년 판별기 \n");
+	int Year = 0;
+	printf("연도를 입력 하세요 = ");
+	std::cin >> Year;
 
-	int WidthCount = (Width + (TileSize - 1)) / TileSize;
-	int HeightCount = (Height + (TileSize - 1)) / TileSize;
-
-	printf("필요한 타일 개수 = %d", WidthCount * HeightCount);
+	if ( ((Year % 4 == 0) && (Year % 100 != 0)) || ((Year % 4 == 0) && (Year % 400 == 0)))
+	{
+		printf("%d년은 윤년 입니다.\n\n", Year);
+	}
+	else
+	{
+		printf("%d년은 윤년이 아닙니다.\n\n", Year);
+	}
 
 }
 
