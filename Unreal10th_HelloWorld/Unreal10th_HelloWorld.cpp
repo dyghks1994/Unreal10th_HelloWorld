@@ -2,248 +2,404 @@
 //
 
 #include <iostream>
+#include <stdio.h>
+#include <time.h>
+#include <random>
 
+using namespace std;
 
-int main()  // 코드의 시작점
+int main()
 {
+	srand(time(0));
+
+	// 간단 실습
+	// 1. 가위 바위 보 게임 만들기
+	//	- 3선승제
+	//	- enum 활용
 	/*
-	// 조건문 간단 실습
-	// 1. 숫자를 입력 받아 양수인지 음수인지 0인지 판단하는 코드
-	int Num = 0;
-	printf("양수인지 음수인지 확인할 숫자 입력 = ");
-	std::cin >> Num;
+	enum RPS
+	{
+		Scissors,
+		Rock,
+		Paper,
+	};
+	printf("1. 가위 바위 보 게임 (3선승제) \n");
 
-	if (Num > 0)		// 조건문에서는 항상 범위가 큰 것을 먼저 체크하는 것이 좋다.
+	int PlayerWin = 0, ComputerWin = 0;
+	int PlayerChoice = 0, ComputerChoice = 0;
+
+	while (PlayerWin < 3 && ComputerWin < 3)
 	{
-		printf("%d = 양수 \n", Num);
-	}
-	else if (Num < 0)
-	{
-		printf("%d = 음수 \n", Num);
-	}
-	else
-	{
-		printf("%d = 0 \n", Num);
-	}
+		printf("1.가위, 2.바위, 3.보 선택 = ");
+		cin >> PlayerChoice;
+		PlayerChoice--;
+
+		ComputerChoice = rand() % 3;	// 컴퓨터 선택
+
+		switch (PlayerChoice)
+		{
+		case Rock:
+			switch (ComputerChoice)
+			{
+			case Rock:
+				printf("바위 vs 바위 = 무승부 | 플레이어[%d] : 컴퓨터[%d]\n\n", PlayerWin, ComputerWin);
+				break;
+
+			case Paper:
+				ComputerWin++;
+				printf("바위 vs 보 = 컴퓨터 승 | 플레이어[%d] : 컴퓨터[%d]\n\n", PlayerWin, ComputerWin);
+				break;
+
+			case Scissors:
+				PlayerWin++;
+				printf("바위 vs 가위 = 플레이어 승 | 플레이어[%d] : 컴퓨터[%d]\n\n", PlayerWin, ComputerWin);
+				break;
+			}
+			break;
 	
-	
-	// 2. 숫자를 입력 받아 홀수인지 짝수인지 판단하는 코드
-	int Num2 = 0;
-	printf("홀수/짝수 확인 할 숫자 입력 = ");
-	std::cin >> Num2;
+		case Paper:
+			switch (ComputerChoice)
+			{
+			case Rock:
+				PlayerWin++;
+				printf("보 vs 바위 = 플레이어 승 | 플레이어[%d] : 컴퓨터[%d]\n\n", PlayerWin, ComputerWin);
+				break;
 
-	switch (Num2 % 2)
-	{
-	case 0:
-		printf("%d = 짝수\n\n", Num2);
-		break;
+			case Paper:
+				printf("보 vs 보 = 무승부 | 플레이어[%d] : 컴퓨터[%d]\n\n", PlayerWin, ComputerWin);
+				break;
 
-	case 1:
-		printf("%d = 홀수\n\n", Num2);
-		break;
-	}
+			case Scissors:
+				ComputerWin++;
+				printf("보 vs 가위 = 컴퓨터 승 | 플레이어[%d] : 컴퓨터[%d]\n\n", PlayerWin, ComputerWin);
+				break;
+			}
+			break;
 
-	// 3. 두 수를 입력 받아 더 큰 수를 출력하는 코드, 같을 경우 같다고 출력
-	int Num3 = 0, Num4 = 0;
-	printf("크기 비교 할 숫자 2개 입력 = ");
-	std::cin >> Num3 >> Num4;
+		case Scissors:
+			switch (ComputerChoice)
+			{
+			case Rock:
+				ComputerWin++;
+				printf("가위 vs 바위 = 컴퓨터 승 | 플레이어[%d] : 컴퓨터[%d]\n\n", PlayerWin, ComputerWin);
+				break;
 
-	if (Num3 > Num4)
-	{
-		printf("Num3(%d) 가 더 크다\n", Num3);
-	}
-	else if (Num3 < Num4)
-	{
-		printf("Num4(%d) 가 더 크다\n", Num4);
-	}
-	else
-	{
-		printf("Num3(%d) == Num4(%d) \n\n", Num3, Num4);
-	}
+			case Paper:
+				PlayerWin++;
+				printf("가위 vs 보 = 플레이어 승 | 플레이어[%d] : 컴퓨터[%d]\n\n", PlayerWin, ComputerWin);
+				break;
 
+			case Scissors:
+				printf("가위 vs 가위 = 무승부 | 플레이어[%d] : 컴퓨터[%d]\n\n", PlayerWin, ComputerWin);
+				break;
+			}
 
-	// 논리 연산자 간단 실습
-	// 1. 나이와 키를 입력 받아, 6세 이상, 120cm 이상일 때 롤러코스터 탑승 가능, 그 외에는 불가능으로 출력하기
-	int age = 0, height = 0;
-	printf("나이와 키를 순서대로 입력 = ");
-	std::cin >> age >> height;
-
-	if (age >= 6 && height >= 120)
-	{
-		printf("나이 = %d세, 키 %dcm -> 롤로코스터 탑승 가능\n\n", age, height);
+			break;
+		}
 	}
-	else
-	{
-		printf("나이 = %d세, 키 %dcm -> 롤로코스터 탑승 불가능\n\n", age, height);
-	}
-	
-	// 2. 점수를 입력 받아 90점 이상은 A, 80점 이상은 B, 70점 이상은 C, 60점 이상은 D, 그 이하는 F라고 출력하기
-	int Score = 0;
-	printf("점수 입력 = ");
-	std::cin >> Score;
-
-	if (Score >= 90)
-	{
-		printf("점수 = %d, A학점\n\n", Score);
-	}
-	else if (Score >= 80)
-	{
-		printf("점수 = %d, B학점\n\n", Score);
-	}
-	else if (Score >= 70)
-	{
-		printf("점수 = %d, C학점\n\n", Score);
-	}
-	else if (Score >= 60)
-	{
-		printf("점수 = %d, D학점\n\n", Score);
-	}
-	else
-	{
-		printf("점수 = %d, F학점\n\n", Score);
-	}
-
-	// 3. 세 과목의 점수를 입력 받아 세 과목의 평균점이 60점 이상이면 "합격", 아니면 "불합격"을 출력하는 프로그램을 작성하기
-	//		한 과목이라도 40점 미만이면 불합격 출력하기
-	int Score2 = 0, Score3 = 0, Score4 = 0;
-	float average = 0.0f;
-
-	printf("세 과목 점수 입력 = ");
-	std::cin >> Score2 >> Score3 >> Score4;
-
-	average = (float)(Score2 + Score3 + Score4) / 3.0f;
-
-	if (Score2 < 40 || Score3 < 40 || Score4 < 40)
-	{
-		printf("Score2 = %d, Score3 = %d, Score4 = %d, 평균 = %.2f 과락", Score2, Score3, Score4, average);
-	}
-	else if(average < 60.0f)
-	{
-		printf("Score2 = %d, Score3 = %d, Score4 = %d, 평균 = %.2f 불합격", Score2, Score3, Score4, average);
-	}
-	else
-	{
-		printf("Score2 = %d, Score3 = %d, Score4 = %d, 평균 = %.2f 합격", Score2, Score3, Score4, average);
-	}
+	printf("최종 스코어 플레이어[%d] vs 컴퓨터[%d] \n\n", PlayerWin, ComputerWin);
 	*/
 
 
-	// 5/19 실습
-	//  1. 세 수 중 최댓값과 최솟값 찾기
-	//  	3개의 정수를 입력받아, 그중 가장 큰 수와 가장 작은 수를 출력
+	/*
+	// 2. 하이 로우
+	//	- 컴퓨터가 1~100 사이의 임의의 숫자를 선택하고, 사용자가 맞출 때 까지 입력을 받아 "더 높게", "더 낮게"등의 힌트를
+	//	- 5번 안에 맞춰야 함
+	printf("2. 하이 로우\n");
 
-	printf("1. 세 수 중 최댓값과 최솟값 찾기 \n");
-	int a = 0, b = 0, c = 0;
-
-	printf("정수 3개 입력 = ");
-	std::cin >> a >> b >> c;
-
-	if (a >= b && a >= c)
+	int ComRandomNum = rand() % 100 + 1;
+	int PlayerCallNum = 0;
+	int Round = 1;
+	const int Limit = 5;
+		
+	do
 	{
-		printf("최댓값 = %d \n\n", a);
-	}
-	else if (b >= a && b >= c)
-	{
-		printf("최댓값 = %d \n\n", b);
-	}
-	else
-	{
-		printf("최댓값 = %d \n\n", c);
-	}
+		printf("숫자를 하나 입력하세요 = ");
+		cin >> PlayerCallNum;
 
-	if (a <= b && a <= c)
-	{
-		printf("최소값 = %d \n\n", a);
-	}
-	else if (b <= a && b <= c)
-	{
-		printf("최소값 = %d \n\n", b);
-	}
-	else
-	{
-		printf("최소값 = %d \n\n", c);
-	}
-
-
-	//  2. 세 개의 선분 길이를 입력받아, 이 선분들로 삼각형을 만들 수 있는지 판별하기
-	//  	조건 : 삼각형이 되려면 '한 변의 길이 < 나머지 두 변의 길이의 합'이어야 함.
-	printf("2. 세 개의 선분 길이를 입력 받아 이 선분들로 삼각형을 만들 수 있는지 판별하기 \n");
-
-	int LineA = 0, LineB = 0, LineC = 0;
-	printf("세 개의 선분 길이 입력 = ");
-	std::cin >> LineA >> LineB >> LineC;
-
-	if ( (LineA < LineB + LineC) && (LineB < LineA + LineC) && (LineC < LineA + LineB))
-	{
-		printf(" 삼각형 가능\n\n");		
-	}
-	else
-	{
-		printf(" 삼각형 불가능\n\n");
-	}
-			
-	//  3. 미니 계산기
-	//  	두 개의 정수와 하나의 연산자(+, -, *, / )를 입력받아 결과를 출력
-	//  	단, 나눗셈에서 0으로 나누려고 하면 "0으로 나눌 수 없습니다"라는 에러 메시지를 출력
-	printf("3. 미니 계산기 \n");
-	int Number1 = 0, Number2 = 0;
-	char Operator = '\0';
-
-	printf("두개의 정수와 연산자를 입력하시오 = ");
-	std::cin >> Number1 >> Operator >> Number2;
-
-	switch (Operator)
-	{
-	case '+':
-		printf("%d %c %d = %d\n\n", Number1, Operator, Number2, Number1 + Number2);
-		break;
-
-	case '-':
-		printf("%d %c %d = %d\n\n", Number1, Operator, Number2, Number1 - Number2);
-		break;
-
-	case '*':
-		printf("%d %c %d = %d\n\n", Number1, Operator, Number2, Number1 * Number2);
-		break;
-
-	case '/':
-		if (Number2 == 0)
+		if (PlayerCallNum < ComRandomNum)
 		{
-			printf("0으로 나눌 수 없습니다. \n\n");
+			printf("Up!! \n\n");
+		}
+		else if (PlayerCallNum > ComRandomNum)
+		{
+			printf("Down!! \n\n");
 		}
 		else
 		{
-			printf("%d %c %d = %f\n\n", Number1, Operator, Number2, (float)(Number1 / Number2));
+			printf("정답입니다!\n\n"); 
+			break;
 		}
-		break;
 
-	default:
+		Round++;
+	} while (Round <= Limit);
+
+	if (Round >= Limit)
 	{
-		printf("잘못 입력했습니다. \n\n");
+		printf("5회 안에 맞추기 실패...\n\n");
 	}
-	}
+	*/
 
-
-
-	//  4. 윤년 판별기
-	//  	연도(예 : 2024)를 입력받아 그 해가 윤년인지 평년인지 출력
-	//  	윤년의 조건 :
-	//			연도가 4로 나누어 떨어지면 윤년이다.
-	//  		하지만 100으로 나누어 떨어지면 평년이다.
-	//  		그럼에도 400으로 나누어 떨어지면 윤년이다.
-	printf("4. 윤년 판별기 \n");
-	int Year = 0;
-	printf("연도를 입력 하세요 = ");
-	std::cin >> Year;
-
-	if ( ((Year % 4 == 0) && (Year % 100 != 0)) || ((Year % 4 == 0) && (Year % 400 == 0)))
+	// 실습
+	
+	/*
+	// 
+	// 1. 비트플래그를 이용한 캐릭터 상태 변환 구현하기
+	//	- 캐릭터의 상태는 대기, 점프, 공격, 무적 4가지가 존재
+	//	- 다음 작업을 수행하고 현재 상태 출력하기
+	//	- 플레이어의 상태를 대기로 설정
+	//	- 점프 상태 추가
+	//	- 공격 상태 추가
+	//	- 대기 상태 해제
+	//	- 무적 상태 추가
+	//	- 무적 상태 토글(XOR 사용)
+	//
+	//	- 현재 상태를 출력할 때는 다음과 같은 양식을 따를 것
+	//	- 대기 : [O] , 점프 : [O] , 공격 : [X] , 무적 : [O]
+	enum PlayerState
 	{
-		printf("%d년은 윤년 입니다.\n\n", Year);
-	}
-	else
+		Idle		= 1 << 0,	// 대기
+		Jump		= 1 << 1,	// 점프
+		Attack		= 1 << 2,	// 공격
+		Invincible	= 1 << 3,	// 무적
+	};
+
+	int vPlayerState = Idle;	// 초기상태 Idle
+	
+
+	// 초기 상태 출력
+	printf("대기 : [%c], 점프 : [%c], 공격 : [%c], 무적 : [%c]\n", (vPlayerState& Idle) ? 'O' : 'X', (vPlayerState& Jump) ? 'O' : 'X', (vPlayerState& Attack) ? 'O' : 'X', (vPlayerState& Invincible) ? 'O' : 'X');
+
+	// 점프 상태 추가;
+	vPlayerState |= Jump;
+	printf("대기 : [%c], 점프 : [%c], 공격 : [%c], 무적 : [%c]\n", (vPlayerState& Idle) ? 'O' : 'X', (vPlayerState& Jump) ? 'O' : 'X', (vPlayerState& Attack) ? 'O' : 'X', (vPlayerState& Invincible) ? 'O' : 'X');
+
+	// 공격 상태 추가 
+	vPlayerState |= Attack;
+	printf("대기 : [%c], 점프 : [%c], 공격 : [%c], 무적 : [%c]\n", (vPlayerState& Idle) ? 'O' : 'X', (vPlayerState& Jump) ? 'O' : 'X', (vPlayerState& Attack) ? 'O' : 'X', (vPlayerState& Invincible) ? 'O' : 'X');
+
+	// 대기 상태 해제 
+	vPlayerState &= ~Idle;
+	printf("대기 : [%c], 점프 : [%c], 공격 : [%c], 무적 : [%c]\n", (vPlayerState& Idle) ? 'O' : 'X', (vPlayerState& Jump) ? 'O' : 'X', (vPlayerState& Attack) ? 'O' : 'X', (vPlayerState& Invincible) ? 'O' : 'X');
+
+	// 무적 상태 추가 
+	vPlayerState |= Invincible;
+	printf("대기 : [%c], 점프 : [%c], 공격 : [%c], 무적 : [%c]\n", (vPlayerState& Idle) ? 'O' : 'X', (vPlayerState& Jump) ? 'O' : 'X', (vPlayerState& Attack) ? 'O' : 'X', (vPlayerState& Invincible) ? 'O' : 'X');
+
+	// 무적 상태 토글 
+	vPlayerState ^= Invincible;
+	printf("대기 : [%c], 점프 : [%c], 공격 : [%c], 무적 : [%c]\n", (vPlayerState& Idle) ? 'O' : 'X', (vPlayerState& Jump) ? 'O' : 'X', (vPlayerState& Attack) ? 'O' : 'X', (vPlayerState& Invincible) ? 'O' : 'X');
+	*/
+
+
+	//	2. 주사위 게임
+	//		1. 초기 세팅
+	//			- 플레이어와 컴퓨터 모두 일정 금액(예 : 10000원)으로 시작한다.
+	//		2. 1차 주사위 굴리기
+	//			- 게임 시작 시, 플레이어와 컴퓨터가 각각 주사위(1~6)를 한 번 굴린다.
+	//			- 각자 주사위 결과를 공개한다.
+	//		3. 배팅
+	//			- 이전 판에서 진 쪽이 배팅 금액을 제시한다.
+	//			- 제시한 배팅 금액은 두 사람 모두의 현재 소지 금액 이하이어야 한다.
+	//			- 배팅 금액은 두 사람 모두에게서 차감된다.
+	//		4. 2차 주사위 굴리기
+	//			- 다시 플레이어와 컴퓨터가 각각 주사위를 한 번씩 굴린다.
+	//			- (1차 + 2차) 주사위의 합을 계산한다.
+	//		5. 승패 판정 및 금액 증감
+	//			- 합이 더 큰 쪽이 배팅 금액의 총합(즉, 2×배팅금액)을 모두 가져간다.
+	//			- 동점일 경우 배팅 금액은 그대로 반환한다.
+	//		6. 다음 판 진행
+	//			- 소지금이 0 이하인 쪽이 나오면 게임 종료.
+
+	enum Stage
 	{
-		printf("%d년은 윤년이 아닙니다.\n\n", Year);
-	}
+		FirstDice,
+		Bet,
+		SecondDice,
+		Result,
+		End,
+	};
+
+	enum FirstBetPlayer
+	{
+		Player,
+		Computer,
+	};
+
+	Stage sStage = FirstDice;
+	FirstBetPlayer vFirstBetPlayer = Player;
+
+	int PlayerMoney = 10000, ComputerMoney = 10000;
+	int PlayerBet = 0, ComputerBet = 0;
+	int PlayerDice = 0, ComputerDice = 0;
+	int Pot = 0;
+
+	printf("초기 소지금 - 플레이어[%d] : 컴퓨터[%d] \n\n", PlayerMoney, ComputerMoney);
+	do
+	{
+		switch (sStage)
+		{
+		case FirstDice:
+		{
+			int PlayerFirstDice = rand() % 6 + 1;
+			PlayerDice = PlayerFirstDice;
+
+			int ComputerFirstDice = rand() % 6 + 1;
+			ComputerDice = ComputerFirstDice;
+			
+			printf("1차 주사위 - 플레이어[%d] : 컴퓨터[%d]\n\n", PlayerFirstDice, ComputerFirstDice);
+
+			sStage = Bet;	// 게임 상태 (Bet) 변경
+			
+			break;
+		}
+
+		case Bet:
+		{
+
+			if (vFirstBetPlayer == Player)
+			{
+				printf("선플레이어 = 플레이어, 베팅 금액 입력 : ");
+				do
+				{
+					cin >> PlayerBet;
+					if (PlayerBet > PlayerMoney)
+					{
+						printf("베팅 금액은 현재 금액보다 클 수 없습니다. 현재 보유머니  %d\n", PlayerMoney);
+					}
+
+					else if (PlayerBet > ComputerMoney)
+					{
+						printf("베팅 금액은 양쪽의 보유머니 보다 클 수 없습니다. 현재 보유머니  플레이어[%d] : 컴퓨터[%d]\n", PlayerMoney, ComputerMoney);
+					}
+				} while (PlayerBet > PlayerMoney || PlayerBet > ComputerMoney);
+			
+				ComputerBet = PlayerBet;	// 플레이어의 베팅금액 만큼 컴퓨터도 배팅금액 설정
+			}
+			else if (vFirstBetPlayer == Computer)
+			{
+				// 컴퓨터 배팅금액 결정
+				if (PlayerMoney < ComputerMoney)	// 플레이어가 보유머니가 더 적을 경우
+				{
+					ComputerBet = rand() % PlayerMoney + 1;	
+				}
+				else	// 컴퓨터가 보유머니가 더 적거나 플레이어의 보유머니와 같은 경우
+				{
+					ComputerBet = rand() % ComputerMoney + 1;	
+				}
+
+				// 컴퓨터 배팅금액 만큼 플레이어 배팅금액 설정
+				PlayerBet = ComputerBet;		
+
+				printf("배팅 금액 - 플레이어[%d] : 컴퓨터[%d]\n\n", PlayerBet, ComputerBet);
+			}
+
+			// 팟에 배팅금액 넣고, 플레이어, 컴퓨터 보유머니 차감
+			Pot = PlayerBet;
+			PlayerMoney -= PlayerBet;
+
+			Pot += ComputerBet;
+			ComputerMoney -= ComputerBet;
+
+			sStage = SecondDice;
+			break;
+		}
+
+		case SecondDice:	// 두번째 주사위 던지고 합산
+		{
+
+			int PlayerSecondDice = rand() % 6 + 1;
+			int ComputerSecondDice = rand() % 6 + 1;
+
+			PlayerDice += PlayerSecondDice;
+			ComputerDice += ComputerSecondDice;
+
+			printf("2차 주사위 - 플레이어[%d] : 컴퓨터[%d]\n\n", PlayerSecondDice, ComputerSecondDice);
+
+			sStage = Result;
+			break;
+		}
+
+		case Result:
+		{
+
+			// 플레이어 승
+			if (PlayerDice > ComputerDice)
+			{
+				printf("Player Win!! - 플레이어 주사위[%d] : 컴퓨터 주사위[%d]\n", PlayerDice, ComputerDice);
+				PlayerMoney += Pot;
+				Pot = 0;
+				
+				printf("남은 소지금 - 플레이어[%d] : 컴퓨터[%d]\n\n", PlayerMoney, ComputerMoney);
+				printf("-------------------------------------------------------\n\n");
+
+				// 컴퓨터가 졌으므로 다음 차례에 먼저 배팅
+				vFirstBetPlayer = Computer;
+			}
+
+			// 컴퓨터 승
+			else if (PlayerDice < ComputerDice)
+			{
+				printf("Computer Win!! - 플레이어 주사위[%d] : 컴퓨터 주사위[%d]\n", PlayerDice, ComputerDice);
+				
+				ComputerMoney += Pot;
+				Pot = 0;
+				
+				printf("남은 소지금 - 플레이어[%d] : 컴퓨터[%d]\n\n", PlayerMoney, ComputerMoney);
+				printf("-------------------------------------------------------\n\n");
+
+				// 플레이어가 졌으므로 다음 차례에 먼저 배팅
+				vFirstBetPlayer = Player;
+			}
+
+			// 무승부
+			else
+			{
+				printf("무승부!! - 플레이어 주사위[%d] : 컴퓨터 주사위[%d]\n", PlayerDice, ComputerDice);
+				PlayerMoney += Pot / 2;
+				ComputerMoney += Pot / 2;
+
+				printf("남은 소지금 - 플레이어[%d] : 컴퓨터[%d]\n\n", PlayerMoney, ComputerMoney);
+				printf("-------------------------------------------------------\n\n");
+
+
+				Pot = 0;
+			}
+
+			// 한쪽이 소지금을 모두 잃으면
+			if (PlayerMoney <= 0 || ComputerMoney <= 0)
+			{
+				sStage = End;
+			}
+			// 양쪽 다 소지금이 남아 있으면
+			else
+			{
+				sStage = FirstDice;
+			}
+
+			break;
+		}
+					
+		}
+
+	}while (sStage != End);
+	printf("주사위 게임 종료!\n\n");
+
+	//	3. 홀짝 게임
+	//		1. 초기 금액 및 배팅
+	//			- 플레이어는 기본금 100원으로 베팅을 시작한다.
+	//		2. 홀짝 선택
+	//			- 플레이어가 1(홀)또는 2(짝)을 선택한다.
+	//		3. 결과 결정
+	//			- 컴퓨터가 랜덤으로 1(홀)또는 2(짝)을 선택한다.
+	//			- 플레이어의 선택과 결과가 일치하면 승리(이기면 배팅금의 2배 획득), 다르면 패배(배팅금 전액 잃음).
+	//		4. 연속 배팅 선택
+	//			- 승리 시 플레이어는 두 가지 중 하나를 선택 :
+	//			- (A)이긴 금액을 모두 다시 한 번에 배팅 (연승 도전)
+	//			- (B)이긴 금액을 얻고, 다시 100원부터 새로 배팅 시작
+	//		5. 게임 종료 조건
+	//			- 플레이어가 소지금이 100원 미만일 경우 게임 종료.
+
 
 }
 
