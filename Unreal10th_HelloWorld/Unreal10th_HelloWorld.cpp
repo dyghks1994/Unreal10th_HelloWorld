@@ -16,7 +16,7 @@ int main()
 	// 1. 가위 바위 보 게임 만들기
 	//	- 3선승제
 	//	- enum 활용
-	/*
+/*
 	enum RPS
 	{
 		Scissors,
@@ -98,10 +98,10 @@ int main()
 		}
 	}
 	printf("최종 스코어 플레이어[%d] vs 컴퓨터[%d] \n\n", PlayerWin, ComputerWin);
-	*/
+*/
 
 
-	/*
+/*
 	// 2. 하이 로우
 	//	- 컴퓨터가 1~100 사이의 임의의 숫자를 선택하고, 사용자가 맞출 때 까지 입력을 받아 "더 높게", "더 낮게"등의 힌트를
 	//	- 5번 안에 맞춰야 함
@@ -138,11 +138,11 @@ int main()
 	{
 		printf("5회 안에 맞추기 실패...\n\n");
 	}
-	*/
+/*/
 
 	// 실습
 	
-	/*
+/*
 	// 
 	// 1. 비트플래그를 이용한 캐릭터 상태 변환 구현하기
 	//	- 캐릭터의 상태는 대기, 점프, 공격, 무적 4가지가 존재
@@ -189,9 +189,10 @@ int main()
 	// 무적 상태 토글 
 	vPlayerState ^= Invincible;
 	printf("대기 : [%c], 점프 : [%c], 공격 : [%c], 무적 : [%c]\n", (vPlayerState& Idle) ? 'O' : 'X', (vPlayerState& Jump) ? 'O' : 'X', (vPlayerState& Attack) ? 'O' : 'X', (vPlayerState& Invincible) ? 'O' : 'X');
-	*/
+/*/
 
 
+/*
 	//	2. 주사위 게임
 	//		1. 초기 세팅
 	//			- 플레이어와 컴퓨터 모두 일정 금액(예 : 10000원)으로 시작한다.
@@ -256,6 +257,10 @@ int main()
 
 		case Bet:
 		{
+			// 최대 제한 베팅금액
+			// 플레이어와 컴퓨터중 더 적은 금액으로 설정
+			int MaxLimitMoney = (PlayerMoney < ComputerMoney) ? PlayerMoney : ComputerMoney;	
+			int MaxMultiplier = MaxLimitMoney / 100;
 
 			if (vFirstBetPlayer == Player)
 			{
@@ -268,31 +273,36 @@ int main()
 						printf("베팅 금액은 현재 금액보다 클 수 없습니다. 현재 보유머니  %d\n", PlayerMoney);
 					}
 
-					else if (PlayerBet > ComputerMoney)
+					else if (PlayerBet > MaxLimitMoney)
 					{
 						printf("베팅 금액은 양쪽의 보유머니 보다 클 수 없습니다. 현재 보유머니  플레이어[%d] : 컴퓨터[%d]\n", PlayerMoney, ComputerMoney);
 					}
-				} while (PlayerBet > PlayerMoney || PlayerBet > ComputerMoney);
+				} while (PlayerBet > MaxLimitMoney);
 			
 				ComputerBet = PlayerBet;	// 플레이어의 베팅금액 만큼 컴퓨터도 배팅금액 설정
 			}
 			else if (vFirstBetPlayer == Computer)
 			{
 				// 컴퓨터 배팅금액 결정
-				if (PlayerMoney < ComputerMoney)	// 플레이어가 보유머니가 더 적을 경우
+				if (MaxMultiplier > 0)
 				{
-					ComputerBet = rand() % PlayerMoney + 1;	
-				}
-				else	// 컴퓨터가 보유머니가 더 적거나 플레이어의 보유머니와 같은 경우
-				{
-					ComputerBet = rand() % ComputerMoney + 1;	
+					// 배팅금액 100 단위로 조정
+					ComputerBet = (rand() % MaxMultiplier + 1) * 100;
 				}
 
-				// 컴퓨터 배팅금액 만큼 플레이어 배팅금액 설정
-				PlayerBet = ComputerBet;		
-
-				printf("배팅 금액 - 플레이어[%d] : 컴퓨터[%d]\n\n", PlayerBet, ComputerBet);
+				// 보유 금액이 100보다 작을경우 예외처리
+				else
+				{
+					// 올인
+					ComputerBet = ComputerMoney;
+				}
 			}
+			
+			// 컴퓨터 배팅금액 만큼 플레이어 배팅금액 설정
+			PlayerBet = ComputerBet;		
+			
+			printf("배팅 금액 - 플레이어[%d] : 컴퓨터[%d]\n\n", PlayerBet, ComputerBet);
+			
 
 			// 팟에 배팅금액 넣고, 플레이어, 컴퓨터 보유머니 차감
 			Pot = PlayerBet;
@@ -384,7 +394,9 @@ int main()
 
 	}while (sStage != End);
 	printf("주사위 게임 종료!\n\n");
+*/
 
+/*
 	//	3. 홀짝 게임
 	//		1. 초기 금액 및 배팅
 	//			- 플레이어는 기본금 100원으로 베팅을 시작한다.
@@ -399,7 +411,74 @@ int main()
 	//			- (B)이긴 금액을 얻고, 다시 100원부터 새로 배팅 시작
 	//		5. 게임 종료 조건
 	//			- 플레이어가 소지금이 100원 미만일 경우 게임 종료.
+	
+	int PlayerMoney = 1000;		// 머니 초기화
+	int BetMoney = 0;			// 베팅 금액 
+	int PlayerAction = 0;		// 플레이어 홀,짝 선택
+	int PlayerWinAction = 0;	// 승리 시 연승도전 여부 선택
+	int ComputerAction = 0;		// 컴퓨터의 랜덤 선택
+	bool IsWin = 0;				// 승패 판단
+	
+	printf("3. 홀짝 게임 \n\n");
+	printf("현재 머니 [%d] \n", PlayerMoney);
+	
+	do
+	{
+		// 연승 베팅아닌 경우 새로 베팅
+		if (PlayerWinAction != 1)
+		{
+			printf("베팅 금액 입력 = ");
+			cin >> BetMoney;
+			PlayerMoney -= BetMoney;
+		}
 
+		printf("1(홀), 2(짝) 중 선택하세요 = ");
+		cin >> PlayerAction;
+
+		ComputerAction = rand() % 2 + 1;	// 컴퓨터 1 ~ 2 랜덤 선택
+
+		switch (ComputerAction)
+		{
+		case 1:
+			printf("홀!  \n");
+			break;
+
+		case 2:
+			printf("짝!! \n");
+			break;
+		}
+
+		// 승패 판단
+		(PlayerAction == ComputerAction) ? IsWin = true : IsWin = false;
+
+		// 홀짝 성공
+		if (IsWin)
+		{
+			// 베팅금액 2배로
+			BetMoney *= 2;
+			
+			printf("1.언승도전  (현재 베팅액 %d )  ,   2.베팅금액 2배 획득 후 리겜  = ", BetMoney);
+			cin >> PlayerWinAction;
+
+			// 베팅금액 획득 선택시
+			if (PlayerWinAction == 2)
+			{
+				PlayerMoney += BetMoney;
+				printf("베팅금액 획득, 누적 머니 = [%d]\n\n", PlayerMoney);
+				BetMoney = 0;
+			}
+		}
+
+		// 홀짝 실패
+		else
+		{			
+			BetMoney = 0;
+			printf("실패.  남은머니 = %d \n\n", PlayerMoney);
+		}
+
+	} while (PlayerMoney > 100);
+
+*/
 
 }
 
