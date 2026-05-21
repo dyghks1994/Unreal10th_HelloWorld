@@ -123,6 +123,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Day0521_2.cpp" />
+    <ClCompile Include="Day0521_FunctionDice.cpp" />
+    <ClCompile Include="Day0521_FunctionStatusChange.cpp" />
+    <ClCompile Include="Day0521_FunctionOddEven.cpp" />
     <ClCompile Include="Unreal10th_HelloWorld.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -130,6 +134,11 @@
     <ClInclude Include="Day0518.h" />
     <ClInclude Include="Day0519.h" />
     <ClInclude Include="Day0520.h" />
+    <ClInclude Include="Day0521.h" />
+    <ClInclude Include="Day0521_2.h" />
+    <ClInclude Include="Day0521_FunctionDice.h" />
+    <ClInclude Include="Day0521_FunctionStatusChange.h" />
+    <ClInclude Include="Day0521_FunctionOddEven.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
