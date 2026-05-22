@@ -387,18 +387,22 @@ void EscapeMaze()
 	};
 	//*/
 
-	printf("== = 텍스트 미로 탈출 게임 == =\n");
-	//PrintMaze(&Maze[0][0], MazeRows, MazeCols);
-	PrintMaze(*Maze, MazeRows, MazeCols);
-
-	// 플레이어 위치 변수
+	// 플레이어 위치 변수 시작위치로 초기화
 	int PlayerPosY = 1;
 	int PlayerPosX = 1;
+
+	// 골인지점 위치 초기화
+	int GoalPosY = 7;
+	int GoalPosX = 18;
 
 	//  골 도착 여부
 	bool bGoal = false;
 
 	char PlayerInput = 0;
+
+	printf("== = 텍스트 미로 탈출 게임 == =\n");
+	//PrintMaze(&Maze[0][0], MazeRows, MazeCols);
+	PrintMaze(*Maze, MazeRows, MazeCols, PlayerPosX, PlayerPosY);
 
 	do 
 	{
@@ -407,46 +411,83 @@ void EscapeMaze()
 		
 		cin >> PlayerInput;
 
+		// 이동하려는 위치 변수 현재 위치로 초기화
+		int CheckPosY = PlayerPosY;
+		int CheckPosX = PlayerPosX;
+
 		/// 위로 이동하려고 할 때
-		if (PlayerInput == 'w' || PlayerInput == 'W')
+		if (PlayerInput == 'w' || PlayerInput == 'W')	   
 		{
-			int CheckPosY = PlayerPosY - 1;
-			int CheckPosX = PlayerPosX;
-
-			// 윗 칸이 길이면
-			if (Maze[CheckPosY][CheckPosX] == 0)
-			{
-				// 위로 이동
-				Maze[PlayerPosY][PlayerPosX] = 0;	// 기존 위치 길(0)로
-				Maze[CheckPosY][CheckPosX] = 2;		// 윗칸을 플레이어(2)로
-			}
-
+			CheckPosY -= 1;
 		}
-		else if (PlayerInput == 'a' || PlayerInput == 'A')
-		{
 
+		/// 왼쪽으로 이동하려고 할 때
+		else if (PlayerInput == 'a' || PlayerInput == 'A') 
+		{ 
+			CheckPosX -= 1;
 		}
+
+		/// 아래쪽으로 이동하려고 할 때
 		else if (PlayerInput == 's' || PlayerInput == 'S')
 		{
-
+			CheckPosY += 1;
 		}
+
+		/// 오른쪽으로 이동하려고 할 때
 		else if (PlayerInput == 'd' || PlayerInput == 'D')
 		{
+			CheckPosX += 1;
+		}
 
+		// 이동하려는 위치가 벽이 아니라면
+		if (Maze[CheckPosY][CheckPosX] != 1)
+		{
+			// 플레이어 위치 이동
+			PlayerPosY = CheckPosY;
+			PlayerPosX = CheckPosX;
+			
+			// 골인 지점 도착시 종료 판별 변수 설정
+			if (PlayerPosY == GoalPosY && PlayerPosX == GoalPosX)
+			{
+				bGoal = true;
+			}
+		}
+
+		else
+		{
+			printf("이동 불가!\n\n");
 		}
 		
+		// 입력 후 미로 재출력
+		PrintMaze(*Maze, MazeRows, MazeCols, PlayerPosX, PlayerPosY);
+
+		
+		
 	} while (bGoal == false);
+
+	printf("미로 탈출 성공!!\n");
 }
 
-void PrintMaze(int*Maze, int Rows, int Cols)
+void PrintMaze(int*Maze, int Rows, int Cols, int PlayerPosX, int PlayerPosY)
 {
+	printf("\n");
+
 	for (int i = 0; i < Rows; i++)
 	{
 		for (int j = 0; j < Cols; j++)
 		{
-			int Val = (Maze[i * Cols + j]);
+			// 플레이어의 위치를 출력하려고 할 때
+			if (i == PlayerPosY && j == PlayerPosX)
+			{
+				// P 출력 후 다음 위치로 넘김
+				printf("P");
+				continue;
+			}
 
+			// 현재 인덱스의 값 추출
+			int Val = (Maze[i * Cols + j]);
 			//printf("%d", Val);
+
 			switch (Val)
 			{
 				case 0: { printf(".");	break; }	// 길

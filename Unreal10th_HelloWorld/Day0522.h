@@ -61,4 +61,4 @@ void MakeLottoNum();
 //		게임 화면은 다음과 같은 양식을 따른다.
 //			w(↑) s(↓) a(←) d(→)는 이동 가능한 방향만 출력한다.
 void EscapeMaze();
-void PrintMaze(int* Maze, int Rows, int Cols);
+void PrintMaze(int* Maze, int Rows, int Cols, int PlayerPosX, int PlayerPosY);
