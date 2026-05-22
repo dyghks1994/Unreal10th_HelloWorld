@@ -127,6 +127,7 @@
     <ClCompile Include="Day0521_FunctionDice.cpp" />
     <ClCompile Include="Day0521_FunctionStatusChange.cpp" />
     <ClCompile Include="Day0521_FunctionOddEven.cpp" />
+    <ClCompile Include="Day0522.cpp" />
     <ClCompile Include="Unreal10th_HelloWorld.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +140,7 @@
     <ClInclude Include="Day0521_FunctionDice.h" />
     <ClInclude Include="Day0521_FunctionStatusChange.h" />
     <ClInclude Include="Day0521_FunctionOddEven.h" />
+    <ClInclude Include="Day0522.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,5 +1,20 @@
 #include <stdio.h>
 #include "Day0521_2.h"
+#include "Day0521_FunctionStatusChange.h"
+#include "Day0521_FunctionDice.h"
+#include "Day0521_FunctionOddEven.h"
+
+void Day0521_Run()
+{
+	// 상태 추가,제거, 토글 함수화 실행
+	StatusChange();
+
+	// 주사위 게임 함수화 실행
+	DiceGame();
+
+	// 홀짝 게임 함수화 실행
+	OddEvenGame();
+}
 
 int Add(int Num1, int Num2)
 {

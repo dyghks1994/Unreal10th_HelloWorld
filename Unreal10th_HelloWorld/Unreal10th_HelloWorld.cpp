@@ -7,23 +7,30 @@
 #include <random>
 
 #include "Day0521_2.h"
-#include "Day0521_FunctionDice.h"
-#include "Day0521_FunctionStatusChange.h"
-#include "Day0521_FunctionOddEven.h"
+#include "Day0522.h"
 
 using namespace std;
 
 int main()
 {
-	// 상태 추가,제거, 토글 함수화 실행
-	StatusChange();
+	unsigned int Seed = (unsigned int)time(0);
+	Seed = 0;		// 테스트용으로 임시로 설정
+	srand(Seed);	// 시드값 초기화
 
+	///0522 내용
+	//Day0521_Run();
+	
+	/// 0522 내용
+	Day0522_Run();
+	//Day0522_Array_Example1();
+	//Day0522_Array_Example2();
+	//Day0522_Array_Example3();
 
-	// 주사위 게임 함수화 실행
-	DiceGame();
+	//Day0522_Casting();
+	//Day0522_Reference();
 
-	// 홀짝 게임 함수화 실행
-	OddEvenGame();
+	//Day0522_Shuffle();
+
 }
 
 // 프로그램 실행: <Ctrl+F5> 또는 [디버그] > [디버깅하지 않고 시작] 메뉴
