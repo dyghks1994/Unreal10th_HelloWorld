@@ -248,6 +248,7 @@ void MazeVer2()
 	//};
 	//*/
 
+	/*
 	int Maze_0[MazeCols] = { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 };
 	int Maze_1[MazeCols] = { 1,2,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0,1,0,1 };
 	int Maze_2[MazeCols] = { 1,1,1,1,0,1,0,1,1,0,1,0,1,1,0,1,0,1,0,1 };
@@ -258,7 +259,6 @@ void MazeVer2()
 	int Maze_7[MazeCols] = { 1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,3,1 };
 	int Maze_8[MazeCols] = { 1,0,1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1 };
 	int Maze_9[MazeCols] = { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 };
-
 
 	// int* Maze 변수
 	int* Maze2[MazeRows];
@@ -272,6 +272,19 @@ void MazeVer2()
 	Maze2[7] = Maze_7;
 	Maze2[8] = Maze_8;
 	Maze2[9] = Maze_9;
+	//*/
+
+	int* MazePointer[MazeRows];
+	MazePointer[0] = new int[MazeCols] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+	MazePointer[1] = new int[MazeCols] { 1, 2, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1 };
+	MazePointer[2] = new int[MazeCols] { 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1 };
+	MazePointer[3] = new int[MazeCols] { 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1 };
+	MazePointer[4] = new int[MazeCols] { 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1 };
+	MazePointer[5] = new int[MazeCols] { 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1 };
+	MazePointer[6] = new int[MazeCols] { 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1 };
+	MazePointer[7] = new int[MazeCols] { 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3, 1 };
+	MazePointer[8] = new int[MazeCols] { 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1 };
+	MazePointer[9] = new int[MazeCols] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 
 	// 플레이어 위치 변수 시작위치로 초기화
 	int PlayerPosY = 1;
@@ -298,7 +311,7 @@ void MazeVer2()
 		//system("cls");
 		//getchar();
 
-		PrintMaze2(Maze2, MazeRows, MazeCols, PlayerPosX, PlayerPosY);
+		PrintMaze2(MazePointer, MazeRows, MazeCols, PlayerPosX, PlayerPosY);
 		printf("이동할 수 있는 방향을 선택하세요(w: 위, s : 아래, a : 왼쪽, d : 오른쪽) :\n");
 		printf("w(↑) s(↓) a(←) d(→)\n");
 
@@ -335,7 +348,7 @@ void MazeVer2()
 		}
 
 		// 이동하려는 위치가 벽이 아니라면
-		if (Maze2[CheckPosY][CheckPosX] != 1)
+		if (MazePointer[CheckPosY][CheckPosX] != 1)
 		{
 			// 플레이어 위치 이동
 			PlayerPosY = CheckPosY;
@@ -393,6 +406,13 @@ void MazeVer2()
 
 	printf("===================================================\n\n");
 
+	// 동적 할당 포인터 배열 해제
+	for (int* Element : MazePointer)
+	{
+		delete Element;
+		Element = nullptr;
+	}
+
 }
 
 void PrintMaze2(int** Maze, int Rows, int Cols, int PlayerPosX, int PlayerPosY)
@@ -413,6 +433,7 @@ void PrintMaze2(int** Maze, int Rows, int Cols, int PlayerPosX, int PlayerPosY)
 
 			// 현재 인덱스의 값 추출
 			//int Val = (Maze[i * Cols + j]);	// 2차원 배열 시절 코드
+
 			int Val = (Maze[i][j]);				/// int*로 변경후 코드
 			//printf("%d", Val);
 
