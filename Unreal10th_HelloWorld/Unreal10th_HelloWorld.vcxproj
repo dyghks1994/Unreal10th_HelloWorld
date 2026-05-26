@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -128,7 +128,9 @@
     <ClCompile Include="Day0521_FunctionStatusChange.cpp" />
     <ClCompile Include="Day0521_FunctionOddEven.cpp" />
     <ClCompile Include="Day0522.cpp" />
+    <ClCompile Include="Day0526.cpp" />
     <ClCompile Include="Unreal10th_HelloWorld.cpp" />
+    <ClCompile Include="Weekend0523.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Day0515.h" />
@@ -141,6 +143,8 @@
     <ClInclude Include="Day0521_FunctionStatusChange.h" />
     <ClInclude Include="Day0521_FunctionOddEven.h" />
     <ClInclude Include="Day0522.h" />
+    <ClInclude Include="Day0526.h" />
+    <ClInclude Include="Weekend0523.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

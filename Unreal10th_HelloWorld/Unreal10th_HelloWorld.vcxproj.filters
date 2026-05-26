@@ -16,6 +16,9 @@
     <Filter Include="소스 파일\Practice">
       <UniqueIdentifier>{d1a96d3b-e98c-4114-98b3-744a694088b1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\Pratice">
+      <UniqueIdentifier>{d6495d03-677f-4c8a-9f3d-8d309a266518}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Unreal10th_HelloWorld.cpp">
@@ -36,6 +39,12 @@
     <ClCompile Include="Day0522.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Weekend0523.cpp">
+      <Filter>소스 파일\Practice</Filter>
+    </ClCompile>
+    <ClCompile Include="Day0526.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Day0515.h">
@@ -53,19 +62,25 @@
     <ClInclude Include="Day0521.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Day0522.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
     <ClInclude Include="Day0521_2.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Day0521_FunctionStatusChange.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Day0521_FunctionOddEven.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Pratice</Filter>
     </ClInclude>
     <ClInclude Include="Day0521_FunctionDice.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Pratice</Filter>
     </ClInclude>
-    <ClInclude Include="Day0522.h">
+    <ClInclude Include="Day0521_FunctionOddEven.h">
+      <Filter>헤더 파일\Pratice</Filter>
+    </ClInclude>
+    <ClInclude Include="Day0521_FunctionStatusChange.h">
+      <Filter>헤더 파일\Pratice</Filter>
+    </ClInclude>
+    <ClInclude Include="Weekend0523.h">
+      <Filter>헤더 파일\Pratice</Filter>
+    </ClInclude>
+    <ClInclude Include="Day0526.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -8,6 +8,8 @@
 
 #include "Day0521_2.h"
 #include "Day0522.h"
+#include "Weekend0523.h"
+#include "Day0526.h"
 
 using namespace std;
 
@@ -17,20 +19,25 @@ int main()
 	Seed = 0;		// 테스트용으로 임시로 설정
 	srand(Seed);	// 시드값 초기화
 
-	///0522 내용
-	//Day0521_Run();
-	
-	/// 0522 내용
-	Day0522_Run();
-	//Day0522_Array_Example1();
-	//Day0522_Array_Example2();
-	//Day0522_Array_Example3();
+	// RunCode
+	{
+		///0522 내용
+		//Day0521_Run();
+		
+		/// 0522 내용
+		//Day0522_Run();
+		//Day0522_Array_Example1();
+		//Day0522_Array_Example2();
+		//Day0522_Array_Example3();
 
-	//Day0522_Casting();
-	//Day0522_Reference();
+		//Day0522_Casting();
+		//Day0522_Reference();
 
-	//Day0522_Shuffle();
+		//Day0522_Shuffle();
+		//Weekend0523_Dungeon();
+	}
 
+	Day0526();
 }
 
 // 프로그램 실행: <Ctrl+F5> 또는 [디버그] > [디버깅하지 않고 시작] 메뉴
