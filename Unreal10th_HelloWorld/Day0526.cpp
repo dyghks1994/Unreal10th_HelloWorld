@@ -286,6 +286,11 @@ void MazeVer2()
 	MazePointer[8] = new int[MazeCols] { 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1 };
 	MazePointer[9] = new int[MazeCols] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 
+	/*
+	
+	//*/
+	
+
 	// 플레이어 위치 변수 시작위치로 초기화
 	int PlayerPosY = 1;
 	int PlayerPosX = 1;

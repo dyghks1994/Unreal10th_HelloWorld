@@ -10,6 +10,7 @@
 #include "Day0522.h"
 #include "Weekend0523.h"
 #include "Day0526.h"
+#include "Day0527.h"
 
 using namespace std;
 
@@ -35,9 +36,12 @@ int main()
 
 		//Day0522_Shuffle();
 		//Weekend0523_Dungeon();
+		
+		//Day0526();
 	}
 
-	Day0526();
+	Day0527();
+
 }
 
 // 프로그램 실행: <Ctrl+F5> 또는 [디버그] > [디버깅하지 않고 시작] 메뉴

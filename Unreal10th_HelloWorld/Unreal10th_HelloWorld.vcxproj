@@ -102,6 +102,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -129,6 +130,7 @@
     <ClCompile Include="Day0521_FunctionOddEven.cpp" />
     <ClCompile Include="Day0522.cpp" />
     <ClCompile Include="Day0526.cpp" />
+    <ClCompile Include="Day0527.cpp" />
     <ClCompile Include="Unreal10th_HelloWorld.cpp" />
     <ClCompile Include="Weekend0523.cpp" />
   </ItemGroup>
@@ -144,6 +146,7 @@
     <ClInclude Include="Day0521_FunctionOddEven.h" />
     <ClInclude Include="Day0522.h" />
     <ClInclude Include="Day0526.h" />
+    <ClInclude Include="Day0527.h" />
     <ClInclude Include="Weekend0523.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
