@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string.h>
+#include "Utils.h"
 #include "Day0527.h"
 
 void Day0527()
@@ -108,6 +109,7 @@ void Day0527()
 	printf("FailCount = %d \n", FailCount);
 
 	// 위 함수들 만들기. 파라메터와 리턴 타입은 원본과 같이 만들기
+
 
 }
 

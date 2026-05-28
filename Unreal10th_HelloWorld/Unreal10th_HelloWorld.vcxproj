@@ -131,7 +131,9 @@
     <ClCompile Include="Day0522.cpp" />
     <ClCompile Include="Day0526.cpp" />
     <ClCompile Include="Day0527.cpp" />
+    <ClCompile Include="Day0528.cpp" />
     <ClCompile Include="Unreal10th_HelloWorld.cpp" />
+    <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Weekend0523.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +149,8 @@
     <ClInclude Include="Day0522.h" />
     <ClInclude Include="Day0526.h" />
     <ClInclude Include="Day0527.h" />
+    <ClInclude Include="Day0528.h" />
+    <ClInclude Include="Utils.h" />
     <ClInclude Include="Weekend0523.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
