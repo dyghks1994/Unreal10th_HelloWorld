@@ -54,16 +54,46 @@ struct EnemyOrc
 
 };
 
+struct MazePlayer
+{
+	int PosX = 1;
+	int PosY = 1;
+	const int MaxHealthPoint = 100;
+	int HealthPoint = MaxHealthPoint;
+	const int MinAttackPower = 5;
+	const int MaxAttackPower = 15;
+	int AttackPower = 15;
+	int Money = 0;
+};
+
+struct MazeEnemy
+{
+	const int MaxHealthPoint = 30;
+	int HealthPoint = MaxHealthPoint;
+	const int MinAttackPower = 5;
+	const int MaxAttackPower = 15;
+	int AttackPower = MaxAttackPower;
+	const int MaxReward = 30;
+	int Reward = 30;
+
+	MazeEnemy()
+	{
+		// 1 ~ Max 사이 랜덤 값 설정
+		HealthPoint = (rand() % MaxHealthPoint) + 1;
+		Reward = (rand() % MaxReward) + 1;
+
+		// 공격력은 공격시에 5 ~ 15 사이 값 설정
+
+	}
+};
+
 void TestStruct(Enemy Target);		// 값에 의한 호출(Call by Value)
 void PrintEnemyData(Enemy& Target);	// 참조에 의한 호출(Call by reference)
 void PrintEnemyData(Enemy* Target);	// 주소에 의한 호출(Call by Address)
 void PrintEnemyData(EnemyOrc* Target);
 
-void Function(Enemy Target);
-void Function(Enemy& Target);
-
 void Maze0528();
 void InitializeMaze0528(int** Maze);
-void PrintMaze0528(int* Maze, int Rows, int Cols, int PlayerPosX, int PlayerPosY);
-int Battle0528(int* PlayerHp, int* EnemyHp);
+void PrintMaze0528(int** Maze, int Rows, int Cols, int PlayerPosX, int PlayerPosY);
+int Battle0528(MazePlayer& Player, MazeEnemy& Enemy);
 void HealHp0528(int* PlayerHp, const int MaxHp);

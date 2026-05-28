@@ -307,14 +307,6 @@ void PrintEnemyData(EnemyOrc* Target)
 	printf("적의 보상은 [%d]입니다.\n", Target->Reward);
 }
 
-void Function(Enemy Target)
-{
-}
-
-void Function(Enemy& Target)
-{
-}
-
 // MapData.txt 파일에서 입력받아 미로 초기화 ver
 void Maze0528()
 {
@@ -342,11 +334,9 @@ void Maze0528()
 	//MazePointer = new int[20 * 10]
 	InitializeMaze0528(&MazePointer);
 	
+	// 플레이어 생성
+	MazePlayer Player;
 	
-	// 플레이어 위치 변수 시작위치로 초기화
-	int PlayerPosY = 1;
-	int PlayerPosX = 1;
-
 	// 골인지점 위치 초기화
 	int GoalPosY = 7;
 	int GoalPosX = 18;
@@ -356,19 +346,16 @@ void Maze0528()
 
 	char PlayerInput = 0;
 
-	const int PlayerHpMax = 100;
-	int PlayerHp = PlayerHpMax;		// 플레이어 Hp 초기화
-	int EnemyHp = 50;				// 적 Hp 초기화
-
-	printf("== = 미로 탈출 게임 Ver2 == =\n");
 	//PrintMaze(&Maze[0][0], MazeRows, MazeCols);
 
 	do
 	{
-		//system("cls");
 		//getchar();
+		//system("cls");
+		printf("== = 미로 탈출 게임 Ver2 == =\n");
+		
 
-		PrintMaze0528(MazePointer, MazeRows, MazeCols, PlayerPosX, PlayerPosY);
+		PrintMaze0528(&MazePointer, MazeRows, MazeCols, Player.PosX, Player.PosY);
 		printf("이동할 수 있는 방향을 선택하세요(w: 위, s : 아래, a : 왼쪽, d : 오른쪽) :\n");
 		printf("w(↑) s(↓) a(←) d(→)\n");
 
@@ -377,8 +364,8 @@ void Maze0528()
 		cin.ignore(10000, '\n');
 
 		// 이동하려는 위치 변수 현재 위치로 초기화
-		int CheckPosY = PlayerPosY;
-		int CheckPosX = PlayerPosX;
+		int CheckPosY = Player.PosY;
+		int CheckPosX = Player.PosX;
 
 		/// 위로 이동하려고 할 때
 		if (PlayerInput == 'w' || PlayerInput == 'W')
@@ -405,17 +392,17 @@ void Maze0528()
 		}
 
 		// 이동하려는 위치가 벽이 아니라면
-		//if (MazePointer[CheckPosY][CheckPosX] != 1)
+		if (MazePointer[CheckPosY * MazeCols + CheckPosX] != 1)
 		{
 			// 플레이어 위치 이동
-			PlayerPosY = CheckPosY;
-			PlayerPosX = CheckPosX;
+			Player.PosY = CheckPosY;
+			Player.PosX = CheckPosX;
 
 			// 이동 후 미로 재출력
 			//PrintMaze2(Maze2, MazeRows, MazeCols, PlayerPosX, PlayerPosY);
 
 			// 골인 지점 도착시 종료 판별 변수 설정
-			if (PlayerPosY == GoalPosY && PlayerPosX == GoalPosX)
+			if (Player.PosY == GoalPosY && Player.PosX == GoalPosX)
 			{
 				printf("미로 탈출 성공!!\n");
 				bGoal = true;
@@ -432,11 +419,11 @@ void Maze0528()
 				// 값이 0 or 1 인 경우
 				if (RandNum < 2)
 				{
-					// 적 Hp 리셋
-					EnemyHp = 50;
+					// 적 생성 
+					MazeEnemy Enemy;
 
 					// 전투 진행 후 결과 저장
-					int Result = Battle0528(&PlayerHp, &EnemyHp);
+					int Result = Battle0528(Player, Enemy);
 
 					// 플레이어 패배
 					if (Result == -1)
@@ -449,27 +436,25 @@ void Maze0528()
 				// 5, 6인 경우
 				if (RandNum >= 5 && RandNum <= 6)
 				{
-					HealHp0528(&PlayerHp, PlayerHpMax);
+					HealHp0528(&Player.HealthPoint, Player.MaxHealthPoint);
 				}
 			}
+
 		}
 
-		//else
+		else
 		{
 			printf("이동 불가!\n\n");
+			
 		}
 
-	} while (bGoal == false && PlayerHp > 0);
+
+	} while (bGoal == false && Player.HealthPoint > 0);
 
 	printf("===================================================\n\n");
 
-	// 동적 할당 포인터 배열 해제
-	//for (int* Element : MazePointer)
-	//{
-	//	delete Element;
-	//	Element = nullptr;
-	//}
-
+	// 동적 할당 포인터 해제
+	delete MazePointer;
 }
 
 void InitializeMaze0528(int** Maze)
@@ -495,51 +480,45 @@ void InitializeMaze0528(int** Maze)
 
 	/// 데이터 파일의 첫 번째 줄을 추출해서 미로의 가로, 세로 구하기
 	{
-		/// 첫줄의 첫번쨰 숫자(width) 추출
+		/// 첫 라인에서 가로, 세로 크기 파싱
 		size_t pos = str.find(',');
-		
-		MazeWidth = stoi(str.substr(0, pos));	// ','전까지 int로 바꿔서 width 추출
-		str.erase(0, pos + 1);					// 맨 앞부터 ',' 까지 제거
-		pos = str.find(',');					// 다시 ',' 위치 찾기
-		MazeHeight = stoi(str.substr(0, str.find(',')));	// 맨 앞부터 ','까지 제거
-		//printf("%s", str.substr(0, pos).c_str());
+		if (pos != std::string::npos)
+		{
+			MazeHeight = std::stoi(str.substr(0, pos));	// 가로 크기
+			MazeWidth = std::stoi(str.substr(pos + 1));	// 세로 크기
+		}
 	}
 
 	/// Width * Height 미로 생성
 	*Maze = new int[MazeWidth * MazeHeight];
 	for (int i = 0; i < MazeWidth * MazeHeight; i++)
 	{
-		*(Maze + i) = 0;
+		(*Maze)[i] = 0;	// 초기화
 	}
 	
 	/// 데이터 파일의 두 번째 줄부터 각 칸의 데이터 추출	
 	// 두 번쨰 줄부터 데이터는 한자리 숫자라는 전제 필요( 0, 1, 2, 3 )
-	int ptr = **Maze;
-	while (In)
+	int InsertIndex = 0;
+	int TotalSize = MazeHeight * MazeWidth;
+	while (getline(In, str) && InsertIndex < TotalSize)
 	{
-		getline(In, str);
-	
-		for (int i = 0; i < str.length(); i++)
+		for (size_t i = 0; i < str.length(); i++)
 		{
-			printf("%d", ptr);
+			// 숫자만 가져오기
 			if (str[i] >= '0' && str[i] <= '9')
 			{
 				int Val = static_cast<int>(str[i] - '0');
-				
-				//*ptr = Val;
-				//printf("%p , %d \n", ptr , *ptr);
-				//(*ptr)++;
-				
-				//printf("%d ", **ptr);
+				(*Maze)[InsertIndex] = Val;
+				InsertIndex++;
 			}
 		}
-		printf("\n");
+		//printf("\n");
 	}
 	//*/
 	
 }
 
-void PrintMaze0528(int* Maze, int Rows, int Cols, int PlayerPosX, int PlayerPosY)
+void PrintMaze0528(int** Maze, int Rows, int Cols, int PlayerPosX, int PlayerPosY)
 {
 	printf("\n");
 
@@ -556,17 +535,14 @@ void PrintMaze0528(int* Maze, int Rows, int Cols, int PlayerPosX, int PlayerPosY
 			}
 
 			// 현재 인덱스의 값 추출
-			//int Val = (Maze[i * Cols + j]);	// 2차원 배열 시절 코드
-
-			int Val = (Maze[1 * i + j]);				/// int*로 변경후 코드
-			//printf("%d", Val);
+			int Val = (*Maze)[i * Cols + j];				/// int*로 변경후 코드
 
 			switch (Val)
 			{
-			case 0: { printf(".");	break; }	// 길
-			case 1: { printf("#");	break; }	// 벽
-			case 2: { printf("S");	break; }	// 시작점
-			case 3: { printf("E");  break; }	// 출구
+			case 0: { printf(". ");	break; }	// 길
+			case 1: { printf("# ");	break; }	// 벽
+			case 2: { printf("S ");	break; }	// 시작점
+			case 3: { printf("E "); break; }	// 출구
 			}
 		}
 		printf("\n");
@@ -574,7 +550,7 @@ void PrintMaze0528(int* Maze, int Rows, int Cols, int PlayerPosX, int PlayerPosY
 	//*/
 }
 
-int Battle0528(int* PlayerHp, int* EnemyHp)
+int Battle0528(MazePlayer& Player, MazeEnemy& Enemy)
 {
 	int Result = 0;			// 전투 상태 체크 1(플레이어 승리), 0(전투중), -1(적 승리)
 	int TurnCount = 1;	// 턴 카운트
@@ -587,46 +563,53 @@ int Battle0528(int* PlayerHp, int* EnemyHp)
 		printf("-> 턴 (%d)\n", TurnCount);
 
 		// 플레이어 데미지 계산
-		int PlayerDamage = (rand() % 11) + 5;	// 5 ~ 15
+		Player.AttackPower = (rand() % (Player.MaxAttackPower - Player.MinAttackPower + 1)) + Player.MinAttackPower;	// 5 ~ 15
 
 		// 10% 확률로 크리티컬 적용
 		int Temp = rand() % 10;
 		if (Temp < 1)
 		{
-			PlayerDamage *= 2;	// 데미지 2배 적용
+			Player.AttackPower *= 2;	// 데미지 2배 적용
 		}
 
-		printf("플레이어의 공격~! 데미지 : %d\n", PlayerDamage);
-		*EnemyHp -= PlayerDamage;
-		if (*EnemyHp < 0)
+		printf("플레이어의 공격~! 데미지 : %d\n", Player.AttackPower);
+		Enemy.HealthPoint -= Player.AttackPower;
+		if (Enemy.HealthPoint < 0)
 		{
-			*EnemyHp = 0;
+			Enemy.HealthPoint = 0;
 		}
-		printf("현재 적 체력 = [%d]\n", *EnemyHp);
+		printf("현재 적 체력 = [%d]\n", Enemy.HealthPoint);
 
 		// 적이 죽으면
-		if (*EnemyHp <= 0)
+		if (Enemy.HealthPoint <= 0)
 		{
 			Result = 1;	// 플레이어 승리 처리
-			printf("\n적을 쓰러뜨렸다!!!\n\n");
+
+			// 보상 설정
+			int Reward = rand() % Enemy.Reward + 1;
+
+			Player.Money += Reward;
+
+			printf("적을 쓰러뜨렸다!!!\n");
+			printf("%d원 획득! 현재 Money = %d\n", Reward, Player.Money);
 			printf("=============================\n");
 
 			break;
 		}
 
 		// 적 데미지 계산
-		int EnemyDamage = (rand() % 11) + 5;	// 5 ~ 15
-		printf("적의 공격~! 데미지 : %d\n", EnemyDamage);
-		*PlayerHp -= EnemyDamage;
-		if (*PlayerHp < 0)
+		Enemy.AttackPower = (rand() % (Enemy.MaxAttackPower - Enemy.MinAttackPower + 1)) + Enemy.MinAttackPower;	// 5 ~ 15
+		printf("적의 공격~! 데미지 : %d\n", Enemy.AttackPower);
+		Player.HealthPoint -= Enemy.AttackPower;
+		if (Player.HealthPoint < 0)
 		{
-			*PlayerHp = 0;
+			Player.HealthPoint = 0;
 		}
-		printf("현재 플레이어 체력 = [%d]\n", *PlayerHp);
+		printf("현재 플레이어 체력 = [%d]\n", Player.HealthPoint);
 
 
 		// 플레이어가 죽으면
-		if (*PlayerHp <= 0)
+		if (Player.HealthPoint <= 0)
 		{
 			Result = -1;	// 적 승리 처리
 			printf("\n플레이어 Hp가 0이 되어 패배...\n\n");
