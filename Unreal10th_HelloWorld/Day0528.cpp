@@ -420,7 +420,7 @@ void Maze0528()
 				if (RandNum < 2)
 				{
 					// 적 생성 
-					MazeEnemy Enemy;
+					MazeEnemyHW Enemy;
 
 					// 전투 진행 후 결과 저장
 					int Result = Battle0528(Player, Enemy);
@@ -475,7 +475,7 @@ void InitializeMaze0528(int** Maze)
 	int MazeHeight = 0;
 
 	// 첫번째 줄은 미로의 사이즈라고 약속(정의)하고 사용
-	std:string str;
+	std::string str;
 	getline(In, str);
 
 	/// 데이터 파일의 첫 번째 줄을 추출해서 미로의 가로, 세로 구하기
@@ -550,7 +550,7 @@ void PrintMaze0528(int** Maze, int Rows, int Cols, int PlayerPosX, int PlayerPos
 	//*/
 }
 
-int Battle0528(MazePlayer& Player, MazeEnemy& Enemy)
+int Battle0528(MazePlayer& Player, MazeEnemyHW& Enemy)
 {
 	int Result = 0;			// 전투 상태 체크 1(플레이어 승리), 0(전투중), -1(적 승리)
 	int TurnCount = 1;	// 턴 카운트

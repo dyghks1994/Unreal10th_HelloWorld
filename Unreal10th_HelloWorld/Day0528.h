@@ -66,7 +66,7 @@ struct MazePlayer
 	int Money = 0;
 };
 
-struct MazeEnemy
+struct MazeEnemyHW
 {
 	const int MaxHealthPoint = 30;
 	int HealthPoint = MaxHealthPoint;
@@ -76,7 +76,7 @@ struct MazeEnemy
 	const int MaxReward = 30;
 	int Reward = 30;
 
-	MazeEnemy()
+	MazeEnemyHW()
 	{
 		// 1 ~ Max 사이 랜덤 값 설정
 		HealthPoint = (rand() % MaxHealthPoint) + 1;
@@ -95,5 +95,5 @@ void PrintEnemyData(EnemyOrc* Target);
 void Maze0528();
 void InitializeMaze0528(int** Maze);
 void PrintMaze0528(int** Maze, int Rows, int Cols, int PlayerPosX, int PlayerPosY);
-int Battle0528(MazePlayer& Player, MazeEnemy& Enemy);
+int Battle0528(MazePlayer& Player, MazeEnemyHW& Enemy);
 void HealHp0528(int* PlayerHp, const int MaxHp);

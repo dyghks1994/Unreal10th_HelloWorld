@@ -19,6 +19,9 @@
     <Filter Include="헤더 파일\Pratice">
       <UniqueIdentifier>{d6495d03-677f-4c8a-9f3d-8d309a266518}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Maze">
+      <UniqueIdentifier>{4d40c897-6a7e-4e62-9c51-11ef9601a070}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Unreal10th_HelloWorld.cpp">
@@ -54,6 +57,18 @@
     <ClCompile Include="Day0528.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Maze</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Maze</Filter>
+    </ClCompile>
+    <ClCompile Include="Day0529.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Maze.cpp">
+      <Filter>소스 파일\Practice</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Day0515.h">
@@ -86,9 +101,6 @@
     <ClInclude Include="Day0521_FunctionStatusChange.h">
       <Filter>헤더 파일\Pratice</Filter>
     </ClInclude>
-    <ClInclude Include="Weekend0523.h">
-      <Filter>헤더 파일\Pratice</Filter>
-    </ClInclude>
     <ClInclude Include="Day0526.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -100,6 +112,24 @@
     </ClInclude>
     <ClInclude Include="Day0528.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Maze</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Maze</Filter>
+    </ClInclude>
+    <ClInclude Include="MazeCommon.h">
+      <Filter>Maze</Filter>
+    </ClInclude>
+    <ClInclude Include="Day0529.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Maze.h">
+      <Filter>소스 파일\Practice</Filter>
+    </ClInclude>
+    <ClInclude Include="Weekend0523.h">
+      <Filter>소스 파일\Practice</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

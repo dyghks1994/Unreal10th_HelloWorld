@@ -1,6 +1,24 @@
 #include <iostream>
 #include <stdlib.h>
+#include "Utils.h"
 #include "Weekend0523.h"
+
+enum MazeTile0523
+{
+    MazePath = 0,
+    MazeWall = 1,
+    MazeStart = 2,
+    MazeEnd = 3
+};
+
+enum MoveDirection0523
+{
+    DirNone = 0,
+    DirUp = 1 << 0,	// 1
+    DirDown = 1 << 1,	// 2
+    DirLeft = 1 << 2,	// 4
+    DirRight = 1 << 3	// 8
+};
 
 const int MazeHeight = 10;
 const int MazeWidth = 20;
@@ -36,7 +54,7 @@ void Weekend0523_Dungeon()
     int PlayerY = InvalidPosition;
     int PlayerHealth = InitHealth;
 
-    FindStart(PlayerX, PlayerY);    // 시작 위치 찾기
+    FindStart0523(PlayerX, PlayerY);    // 시작 위치 찾기
 
     if (PlayerX != InvalidPosition && PlayerY != InvalidPosition)
     {
@@ -46,17 +64,17 @@ void Weekend0523_Dungeon()
         while (true)
         {
             // 화면 출력
-            PrintMaze(PlayerX, PlayerY);
+            PrintMaze0523(PlayerX, PlayerY);
 
             // 출구에 도달했는지 확인
-            if (IsGoal(PlayerX, PlayerY))
+            if (IsGoal0523(PlayerX, PlayerY))
             {
                 printf("축하합니다! 미로를 탈출했습니다!\n\n");
                 break;
             }
 
             // 입력 처리
-            MoveDirection Direction = GetMoveInput(PlayerX, PlayerY);
+            MoveDirection0523 Direction = GetMoveInput0523(PlayerX, PlayerY);
             switch (Direction)
             {
             case DirUp:
@@ -78,7 +96,7 @@ void Weekend0523_Dungeon()
             }
 
             // 랜덤 인카운터 처리
-            if (RandomIncounter())
+            if (RandomIncounter0523())
             {
                 // 전투 시작
                 if (Battle(PlayerHealth))
@@ -100,7 +118,7 @@ void Weekend0523_Dungeon()
     }
 }
 
-void FindStart(int& OutX, int& OutY)
+void FindStart0523(int& OutX, int& OutY)
 {
     // 이중 for를 통해서 미로 전체를 순회하기
     for (int y = 0; y < MazeHeight; y++)
@@ -119,7 +137,7 @@ void FindStart(int& OutX, int& OutY)
     OutY = InvalidPosition;
 }
 
-void PrintMaze(int PlayerX, int PlayerY)
+void PrintMaze0523(int PlayerX, int PlayerY)
 {
     // 이중 for를 통해서 미로 전체를 순회하기
     for (int y = 0; y < MazeHeight; y++)
@@ -152,32 +170,32 @@ void PrintMaze(int PlayerX, int PlayerY)
     }
 }
 
-bool IsGoal(int PlayerX, int PlayerY)
+bool IsGoal0523(int PlayerX, int PlayerY)
 {
     return Maze[PlayerY][PlayerX] == MazeEnd;
 }
 
-int PrintAvailableMoves(int PlayerX, int PlayerY)
+int PrintAvailableMoves0523(int PlayerX, int PlayerY)
 {
     int Flags = DirNone;
 
     // w(↑) s(↓) a(←) d(→)
-    if (!IsWall(PlayerX, PlayerY - 1))
+    if (!IsWall0523(PlayerX, PlayerY - 1))
     {
         printf("w(↑) ");
         Flags |= DirUp;
     }
-    if (!IsWall(PlayerX, PlayerY + 1))
+    if (!IsWall0523(PlayerX, PlayerY + 1))
     {
         printf("s(↓) ");
         Flags |= DirDown;
     }
-    if (!IsWall(PlayerX - 1, PlayerY))
+    if (!IsWall0523(PlayerX - 1, PlayerY))
     {
         printf("a(←) ");
         Flags |= DirLeft;
     }
-    if (!IsWall(PlayerX + 1, PlayerY))
+    if (!IsWall0523(PlayerX + 1, PlayerY))
     {
         printf("d(→) ");
         Flags |= DirRight;
@@ -187,17 +205,17 @@ int PrintAvailableMoves(int PlayerX, int PlayerY)
     return Flags;
 }
 
-bool IsWall(int X, int Y)
+bool IsWall0523(int X, int Y)
 {
     return (X < 0 || X >= MazeWidth || Y < 0 || Y >= MazeHeight || Maze[Y][X] == MazeWall);
 }
 
-MoveDirection GetMoveInput(int PlayerX, int PlayerY)
+MoveDirection0523 GetMoveInput0523(int PlayerX, int PlayerY)
 {
     printf("이동할 방향을 선택하세요 (w:위, s:아래, a:왼쪽, d:오른쪽):\n");
-    int AvailableFlags = PrintAvailableMoves(PlayerX, PlayerY);
+    int AvailableFlags = PrintAvailableMoves0523(PlayerX, PlayerY);
 
-    MoveDirection Result = DirNone;
+    MoveDirection0523 Result = DirNone;
     char Input = 0;
     while (true)
     {
@@ -231,17 +249,8 @@ MoveDirection GetMoveInput(int PlayerX, int PlayerY)
     return Result;
 }
 
-float GetRandom()
-{
-    return rand() / (float)RAND_MAX;   // 0.0f ~ 1.0f
-}
 
-int GetRandomRange(int Min, int Max)
-{
-    return Min + rand() % (Max - Min + 1);  // Min ~ Max(양끝 포함)
-}
-
-bool RandomIncounter()
+bool RandomIncounter0523()
 {
     return GetRandom() < BattleRate;    // BattleRate보다 랜덤값이 적으면 전투 발생
 }
