@@ -78,6 +78,13 @@ void Maze_Dungeon();
 void FindStart(int& OutX, int& OutY);
 
 /// <summary>
+/// 시작 위치 찾는 함수
+/// </summary>
+/// <param name="OutX">시작 X 위치(출력용)</param>
+/// <param name="OutY">시작 Y 위치(출력용)</param>
+Position FindStart();
+
+/// <summary>
 /// 미로를 출력하는 함수
 /// </summary>
 /// <param name="InPlayer">플레이어 참조</param>

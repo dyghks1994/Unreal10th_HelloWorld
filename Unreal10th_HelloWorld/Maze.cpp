@@ -7,6 +7,16 @@
 #include "Enemy.h"
 #include "Maze.h"
 
+/// 06/02 실습 클래스화 적용
+// 미로 탈출 게임에 클래스 적용하기
+// 적과 플레이어의 부모인 Actor 클래스 만들기
+// 공통 함수로 ApplyDamage, TakeDamage가 있어야 한다.
+// Player 클래스 만들고 적용하기(Actor를 상속 받아야 함)
+// Monster 클래스 만들기(Actor를 상속 받아야 함)
+// 3종류 이상의 몬스터 클래스 만들기(Monster 클래스를 상속 받아야 함)
+// 전투시 랜덤한 몬스터가 등장하게 수정
+// 결과는 플레이 영상 링크 제출
+
 // 미로 배열
 //int Maze[MazeHeight][MazeWidth] =
 //{
@@ -52,11 +62,11 @@ void Maze_Dungeon()
         return;
     }
 
-    Player MyPlayer;
+    Player MyPlayer(Position(0, 0), "플레이어", 100, 100, 5, 15);
 
-    FindStart(MyPlayer.Pos.X, MyPlayer.Pos.Y);    // 시작 위치 찾기
+    MyPlayer.SetPosition(FindStart());    // 시작 위치 찾기
 
-    if (MyPlayer.Pos.X != InvalidPosition && MyPlayer.Pos.Y != InvalidPosition)
+    if (MyPlayer.GetPosition().X != InvalidPosition && MyPlayer.GetPosition().Y != InvalidPosition)
     {
         // 시작 위치를 잘 찾은 정상적인 경우
         printf("\n\n===== 텍스트 미로 탈출 게임 =====\n\n");
@@ -82,25 +92,29 @@ void Maze_Dungeon()
 
             // 입력 처리
             MoveDirection Direction = GetMoveInput(MyPlayer);
+            Position Pos = MyPlayer.GetPosition();  // 이동할 좌표 담을 임시 변수
+            
             switch (Direction)
             {
             case DirUp:
-                MyPlayer.Pos.Y--;
+                Pos.Y--;
                 break;
             case DirDown:
-                MyPlayer.Pos.Y++;
+                Pos.Y++;
                 break;
             case DirLeft:
-                MyPlayer.Pos.X--;
+                Pos.X--;
                 break;
             case DirRight:
-                MyPlayer.Pos.X++;
+                Pos.X++;
                 break;
             case DirNone:
             default:
                 printf("ERROR!!! 비정상적인 방향입니다!!!!\n");
                 break;
             }
+            // 이동할 좌표를 실제 플레이어 좌표로 세팅
+            MyPlayer.SetPosition(Pos);
 
             // 랜덤 인카운터 처리
             switch (RandomIncounter())
@@ -165,6 +179,24 @@ void FindStart(int& OutX, int& OutY)
     OutY = InvalidPosition;
 }
 
+Position FindStart()
+{
+    // 이중 for를 통해서 미로 전체를 순회하기
+    for (unsigned int y = 0; y < Maze.Height; y++)
+    {
+        for (unsigned int x = 0; x < Maze.Width; x++)
+        {
+            if (GetMazeData(x, y) == MazeStart)    // 플레이어 시작점을 찾았으면
+            {
+                return Position(x, y);
+            }
+        }
+    }
+
+    // 여기는 잘못된 곳이라고 의도를 명확히 써놓는 의미
+    return Position(InvalidPosition, InvalidPosition);
+}
+
 void PrintMaze(Player& InPlayer)
 {
     // 이중 for를 통해서 미로 전체를 순회하기
@@ -173,7 +205,7 @@ void PrintMaze(Player& InPlayer)
         for (unsigned int x = 0; x < Maze.Width; x++)
         {
             // 현재 위치에 맞는 모양 찍어주기
-            if (InPlayer.Pos.X == x && InPlayer.Pos.Y == y)
+            if (InPlayer.GetPosition().X == x && InPlayer.GetPosition().Y == y)
             {
                 printf(ShapePlayer);    //printf("P ");와 같음                
             }
@@ -201,13 +233,13 @@ void PrintMaze(Player& InPlayer)
 void PrintPlayerState(Player& InPlayer)
 {
     printf("┌───────────────────────────────────────────────┐\n");
-    printf("│  HP : [%4d] / [%4d]\t\tMoney : %6d  │\n", InPlayer.Health, InPlayer.MaxHealth, InPlayer.Money);
+    printf("│  HP : [%4d] / [%4d]\t\tMoney : %6d  │\n", InPlayer.GetHealth(), InPlayer.GetHealthMax(), InPlayer.GetMoney());
     printf("└───────────────────────────────────────────────┘\n");
 }
 
 bool IsGoal(Player& InPlayer)
 {
-    return GetMazeData(InPlayer.Pos.X, InPlayer.Pos.Y) == MazeEnd;
+    return GetMazeData(InPlayer.GetPosition().X, InPlayer.GetPosition().Y) == MazeEnd;
 }
 
 int PrintAvailableMoves(Player& InPlayer)
@@ -215,22 +247,22 @@ int PrintAvailableMoves(Player& InPlayer)
     int Flags = DirNone;
 
     // w(↑) s(↓) a(←) d(→)
-    if (!IsWall(InPlayer.Pos.X, InPlayer.Pos.Y - 1))
+    if (!IsWall(InPlayer.GetPosition().X, InPlayer.GetPosition().Y - 1))
     {
         printf("w(↑) ");
         Flags |= DirUp;
     }
-    if (!IsWall(InPlayer.Pos.X, InPlayer.Pos.Y + 1))
+    if (!IsWall(InPlayer.GetPosition().X, InPlayer.GetPosition().Y + 1))
     {
         printf("s(↓) ");
         Flags |= DirDown;
     }
-    if (!IsWall(InPlayer.Pos.X - 1, InPlayer.Pos.Y))
+    if (!IsWall(InPlayer.GetPosition().X - 1, InPlayer.GetPosition().Y))
     {
         printf("a(←) ");
         Flags |= DirLeft;
     }
-    if (!IsWall(InPlayer.Pos.X + 1, InPlayer.Pos.Y))
+    if (!IsWall(InPlayer.GetPosition().X + 1, InPlayer.GetPosition().Y))
     {
         printf("d(→) ");
         Flags |= DirRight;
@@ -314,15 +346,18 @@ bool Battle(Player& InPlayer)
     MazeEnemy Goblin;
     printf("[%s]이 나타났다!! 전투 시작!\n", Goblin.Name.c_str());
     int Turn = 1;
-    while (InPlayer.Health > 0 && Goblin.Health > 0)
+    while (InPlayer.GetHealth() > 0 && Goblin.Health > 0)
     {
         // 전투 턴 진행
         printf("------------턴 %d------------\n", Turn);
-        printf("| Player : %3d  Enemy : %3d |\n", InPlayer.Health, Goblin.Health);
+        printf("| Player : %3d  Enemy : %3d |\n", InPlayer.GetHealth(), Goblin.Health);
         printf("-----------------------------\n");
-        int Damage = GetRandomRange(InPlayer.AttackPowerMin, InPlayer.AttackPowerMax);
+       
+        int Damage = GetRandomRange(InPlayer.GetAttackPowerMin(), InPlayer.GetAttackPowerMax());
         printf("당신의 공격 : %d의 데미지를 주었다.\n", Damage);
+        
         Goblin.Health -= Damage;
+        
         if (Goblin.Health > 0)
         {
             Damage = GetRandomRange(Goblin.AttackPowerMin, Goblin.AttackPowerMax);
@@ -331,7 +366,7 @@ bool Battle(Player& InPlayer)
         }
     }
 
-    return InPlayer.Health > 0;    // 플레이어의 체력이 남은채 while이 끝났으면 플레이어가 이긴것
+    return InPlayer.GetHealth() > 0;    // 플레이어의 체력이 남은채 while이 끝났으면 플레이어가 이긴것
 }
 
 void Heal(Player& InPlayer)
@@ -341,10 +376,10 @@ void Heal(Player& InPlayer)
 
     int HealAmount = GetRandomRange(HealMin, HealMax);
     printf("회복의 샘을 발견했습니다.\n[%d]만큼의 체력을 회복합니다.\n", HealAmount);
-    InPlayer.Health += HealAmount;   // 랜덤하게 회복
-    if (InPlayer.Health > InPlayer.MaxHealth)
+    InPlayer.SetHealth(InPlayer.GetHealth() + HealAmount);   // 랜덤하게 회복
+    if (InPlayer.GetHealth() > InPlayer.GetHealthMax())
     {
-        InPlayer.Health = InPlayer.MaxHealth;   // 최대치까지만 회복
+        InPlayer.SetHealth(InPlayer.GetHealthMax());   // 최대치까지만 회복
     }
 }
 
@@ -355,7 +390,7 @@ void Treasure(Player& InPlayer)
 
     int TreasureAmount = GetRandomRange(TreasureMin, TreasureMax);
     printf("보물을 발견했습니다.\n[%d]만큼의 돈을 획득합니다.\n", TreasureAmount);
-    InPlayer.Money += TreasureAmount;
+    InPlayer.SetMoney(InPlayer.GetMoney() + TreasureAmount);
 }
 
 int GetSum(int Number)

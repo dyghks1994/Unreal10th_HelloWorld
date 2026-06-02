@@ -1,6 +1,44 @@
 #pragma once
 #include <string>
+#include "Actor.h"
 
+class Monster : public Actor
+{
+public:
+	Monster();
+	virtual ~Monster();
+
+	virtual void Initialize();
+
+protected:
+	int Reward;
+
+private:
+};
+
+
+class Slime : public Monster
+{
+public:
+	Slime();
+	Slime(Position InPos, std::string InName = "슬라임", int InHealth = 20, int InHealthMax = 20, int InAttackPowerMin = 2, int InAttackPowerMax = 5);
+	virtual ~Slime();
+
+	virtual void Initialize() override;
+	virtual void ApplyDamage(Actor& InActor) override;
+	virtual void TakeDamage(int Damage) override;
+
+protected:
+
+private:
+	const int SlimeHealthMax = 20;
+	
+}
+
+
+
+/*
+구 struct 버전 코드
 struct MazeEnemy
 {
 	std::string Name = "고블린";
@@ -80,3 +118,4 @@ struct MazeEnemy
 	}
 
 };
+*/

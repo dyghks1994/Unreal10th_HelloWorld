@@ -13,6 +13,7 @@
 #include "Day0527.h"
 #include "Day0528.h"
 #include "Day0529.h"
+#include "Day0602.h"
 
 #include "Maze.h"
 
@@ -44,12 +45,13 @@ int main()
 		//Day0526();
 		//Day0527();
 		//Day0528();
+		//Day0529();
 	}
+	//Day0602();
 
+	Maze_Run();
 
-	//Maze_Run();
-
-	Day0529();
+	
 	
 }
 

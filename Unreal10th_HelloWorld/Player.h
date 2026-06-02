@@ -1,33 +1,30 @@
 #pragma once
 #include "MazeCommon.h"
+#include "Actor.h"
 
-
-struct Position
+// class 스타일
+class Player : public Actor
 {
-    int X = 0;
-    int Y = 0;
+public:
+    Player();
+    Player(Position InPos, std::string InName, int InHealth, int InHealthMax, int InAttackPowerMin, int InAttackPowerMax);
+    virtual ~Player();
 
-    Position();
-    Position(const int InX, const int InY);
+    inline int GetMoney() { return Money; }
+    inline void SetMoney(const int InMoney) { Money = InMoney; }
 
-    Position operator+(const Position& InPosition) const
-    {
-        Position Result;
-        Result.X = this->X + InPosition.X;
-        Result.Y = this->Y + InPosition.Y;
 
-        return Result;
-    }
 
-    Position operator-(const Position& InPosition) const
-    {
-        Position Result;
-        Result.X = this->X - InPosition.X;
-        Result.Y = this->Y - InPosition.Y;
 
-        return Result;
-    }
+protected:
+    int Money;
+
+private:
 };
+
+
+/*
+구 struch 스타일
 struct Player
 {
     Position Pos;
@@ -40,5 +37,6 @@ struct Player
     int AttackPowerMax = 15;
     int Money = InitMoney;
 };
+*/
 
 

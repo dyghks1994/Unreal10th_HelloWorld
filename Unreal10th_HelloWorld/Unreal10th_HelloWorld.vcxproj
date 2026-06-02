@@ -124,6 +124,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Actor.cpp" />
     <ClCompile Include="Day0521_2.cpp" />
     <ClCompile Include="Day0521_FunctionDice.cpp" />
     <ClCompile Include="Day0521_FunctionStatusChange.cpp" />
@@ -133,7 +134,8 @@
     <ClCompile Include="Day0527.cpp" />
     <ClCompile Include="Day0528.cpp" />
     <ClCompile Include="Day0529.cpp" />
-    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Day0602.cpp" />
+    <ClCompile Include="Monster.cpp" />
     <ClCompile Include="Maze.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Unreal10th_HelloWorld.cpp" />
@@ -142,6 +144,7 @@
     <ClCompile Include="Weekend0523.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Actor.h" />
     <ClInclude Include="Day0515.h" />
     <ClInclude Include="Day0518.h" />
     <ClInclude Include="Day0519.h" />
@@ -156,7 +159,8 @@
     <ClInclude Include="Day0527.h" />
     <ClInclude Include="Day0528.h" />
     <ClInclude Include="Day0529.h" />
-    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Day0602.h" />
+    <ClInclude Include="Monster.h" />
     <ClInclude Include="Maze.h" />
     <ClInclude Include="MazeCommon.h" />
     <ClInclude Include="Player.h" />

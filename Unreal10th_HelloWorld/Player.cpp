@@ -1,15 +1,17 @@
 #include "Player.h"
 
-
-
-Position::Position()
-	: X(0)
-	, Y(0)
+Player::Player()
+	: Actor()
+	, Money(0)
 {
 }
 
-Position::Position(const int InX, const int InY)
-	: X(InX)
-	, Y(InY)
+Player::Player(Position InPos, std::string InName, int InHealth, int InHealthMax, int InAttackPowerMin, int InAttackPowerMax)
+	: Actor(InPos, InName, InHealth, InHealthMax, InAttackPowerMin, InAttackPowerMax)
+	, Money(0)
+{
+}
+
+Player::~Player()
 {
 }
