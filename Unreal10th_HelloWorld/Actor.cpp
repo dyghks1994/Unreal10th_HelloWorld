@@ -36,10 +36,12 @@ Actor::~Actor()
 {
 }
 
-void Actor::ApplyDamage(Actor& InActor)
+int Actor::ApplyDamage(Actor& InActor)
 {
+	return 0;
 }
 
-void Actor::TakeDamage(int Damage)
+int Actor::TakeDamage(int Damage)
 {
+	return 0;
 }

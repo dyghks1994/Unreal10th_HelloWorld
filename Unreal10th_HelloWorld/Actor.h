@@ -50,6 +50,8 @@ public:
         Pos.Y = InY;
     }
 
+    inline std::string GetName() { return Name; }
+
     inline int GetHealth() { return Health; }
     inline void SetHealth(const int InHealth) { Health = InHealth; }
 
@@ -63,8 +65,8 @@ public:
     inline void SetAttackPowerMax(const int InAttackPowerMax) { AttackPowerMax = InAttackPowerMax; }
 
     
-	virtual void ApplyDamage(Actor& InActor);
-	virtual void TakeDamage(int Damage);
+	virtual int ApplyDamage(Actor& InActor);
+	virtual int TakeDamage(int Damage);
 
 
 protected:

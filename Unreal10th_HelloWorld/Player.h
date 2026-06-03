@@ -13,7 +13,8 @@ public:
     inline int GetMoney() { return Money; }
     inline void SetMoney(const int InMoney) { Money = InMoney; }
 
-
+    virtual int ApplyDamage(Actor& InActor) override;
+    virtual int TakeDamage(int Damage) override;
 
 
 protected:
@@ -24,7 +25,7 @@ private:
 
 
 /*
-구 struch 스타일
+//구 struch 스타일
 struct Player
 {
     Position Pos;
@@ -37,6 +38,7 @@ struct Player
     int AttackPowerMax = 15;
     int Money = InitMoney;
 };
-*/
+//*/
+
 
 

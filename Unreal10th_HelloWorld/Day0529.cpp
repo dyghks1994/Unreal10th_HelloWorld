@@ -3,6 +3,7 @@
 
 void Day0529()
 {
+	/*
 	MazeEnemy E1("오크", 1);
 	MazeEnemy E2("슬라임", 2);
 
@@ -40,9 +41,10 @@ void Day0529()
 
 	printf("P2 + P3 = X = %2d, Y = %2d \n", (P2 + P3).X, (P2 + P3).Y);
 	printf("P2 - P3 = X = %2d, Y = %2d \n\n", (P2 - P3).X, (P2 - P3).Y);
-
+	//*/
 }
 
+/*
 void PrintEnemyInfo(MazeEnemy& InEnemy)
 {
 	printf("----------------------------\n");
@@ -64,6 +66,7 @@ MazeEnemy FusionEnemy(MazeEnemy& InEnemy1, MazeEnemy& InEnemy2)
 	return Result;
 }
 
+//*/
 void Maze0529()
 {
 }

@@ -4,8 +4,10 @@
 #include <stdlib.h>
 #include "Utils.h"
 #include "Player.h"
-#include "Enemy.h"
+#include "Monster.h"
 #include "Maze.h"
+
+
 
 /// 06/02 실습 클래스화 적용
 // 미로 탈출 게임에 클래스 적용하기
@@ -62,7 +64,9 @@ void Maze_Dungeon()
         return;
     }
 
-    Player MyPlayer(Position(0, 0), "플레이어", 100, 100, 5, 15);
+    
+    Player MyPlayer({ 0, 0 }, "플레이어", 500, 500, 5, 15);
+    
 
     MyPlayer.SetPosition(FindStart());    // 시작 위치 찾기
 
@@ -313,6 +317,7 @@ MoveDirection GetMoveInput(Player& InPlayer)
             break;
         }
 
+
         printf("잘못된 입력입니다. 이동 가능한 방향 중에서 선택하세요.\n");
     }
 
@@ -343,28 +348,55 @@ bool Battle(Player& InPlayer)
 {
     const float CriticalRate = 0.1f;
 
-    MazeEnemy Goblin;
-    printf("[%s]이 나타났다!! 전투 시작!\n", Goblin.Name.c_str());
+    // 랜덤으로　몬스터 생성
+    Monster* Monster = nullptr;
+    int RandomNum = GetRandomRange(1, 3);
+    switch (RandomNum)
+    {
+        case 1:
+        {
+            Monster = new Slime();
+            break;
+        }
+
+        case 2:
+        {
+            Monster = new Orc();
+            break;
+        }
+
+        case 3:
+        {
+            Monster = new Skeleton();
+            break;
+        }
+    }
+
+
+    printf("[%s]이 나타났다!! 전투 시작!\n", Monster->GetName().c_str());
+
     int Turn = 1;
-    while (InPlayer.GetHealth() > 0 && Goblin.Health > 0)
+    while (InPlayer.GetHealth() > 0 && Monster->GetHealth() > 0)
     {
         // 전투 턴 진행
         printf("------------턴 %d------------\n", Turn);
-        printf("| Player : %3d  Enemy : %3d |\n", InPlayer.GetHealth(), Goblin.Health);
+        printf("| Player : %3d  Enemy : %3d |\n", InPlayer.GetHealth(), Monster->GetHealth());
         printf("-----------------------------\n");
        
-        int Damage = GetRandomRange(InPlayer.GetAttackPowerMin(), InPlayer.GetAttackPowerMax());
-        printf("당신의 공격 : %d의 데미지를 주었다.\n", Damage);
+        printf("당신의 공격 : %d의 데미지를 주었다.\n", InPlayer.ApplyDamage(*Monster));
         
-        Goblin.Health -= Damage;
-        
-        if (Goblin.Health > 0)
+        if (Monster->GetHealth() > 0)
         {
-            Damage = GetRandomRange(Goblin.AttackPowerMin, Goblin.AttackPowerMax);
-            printf("적의 공격 : %d의 데미지를 받았다.\n", Damage);
-            InPlayer.Health -= Damage;
+            printf("적의 공격 : %d의 데미지를 받았다.\n", Monster->ApplyDamage(InPlayer));
         }
+        
+        // 턴 카운트 증가
+        Turn++;
     }
+
+    // 몬스터 메모리 해제
+    delete Monster;
+    Monster = nullptr;
 
     return InPlayer.GetHealth() > 0;    // 플레이어의 체력이 남은채 while이 끝났으면 플레이어가 이긴것
 }

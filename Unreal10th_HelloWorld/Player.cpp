@@ -1,3 +1,4 @@
+#include "Utils.h"
 #include "Player.h"
 
 Player::Player()
@@ -14,4 +15,23 @@ Player::Player(Position InPos, std::string InName, int InHealth, int InHealthMax
 
 Player::~Player()
 {
+}
+
+int Player::ApplyDamage(Actor& InActor)
+{
+	int Damage = GetRandomRange(AttackPowerMin, AttackPowerMax);
+	return InActor.TakeDamage(Damage);
+}
+
+int Player::TakeDamage(int Damage)
+{
+	int ResultDmage = Damage;
+
+	Health -= ResultDmage;
+	if (Health < 0)
+	{
+		Health = 0;
+	}
+
+	return ResultDmage;
 }

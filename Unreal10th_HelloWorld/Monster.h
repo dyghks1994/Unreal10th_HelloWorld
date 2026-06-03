@@ -10,6 +10,9 @@ public:
 
 	virtual void Initialize();
 
+	virtual int ApplyDamage(Actor& InActor) override;
+	virtual int TakeDamage(int Damage) override;
+
 protected:
 	int Reward;
 
@@ -25,20 +28,56 @@ public:
 	virtual ~Slime();
 
 	virtual void Initialize() override;
-	virtual void ApplyDamage(Actor& InActor) override;
-	virtual void TakeDamage(int Damage) override;
+	virtual int ApplyDamage(Actor& InActor) override;
+	virtual int TakeDamage(int Damage) override;
 
 protected:
 
 private:
 	const int SlimeHealthMax = 20;
-	
-}
+
+};
+
+class Orc : public Monster
+{
+public:
+	Orc();
+	Orc(Position InPos, std::string InName = "오크", int InHealth = 30, int InHealthMax = 30, int InAttackPowerMin = 5, int InAttackPowerMax = 10);
+	virtual ~Orc();
+
+	virtual void Initialize() override;
+	virtual int ApplyDamage(Actor& InActor) override;
+	virtual int TakeDamage(int Damage) override;
+
+protected:
+
+private:
+	const int OrcHealthMax = 30;
+
+};
+
+class Skeleton : public Monster
+{
+public:
+	Skeleton();
+	Skeleton(Position InPos, std::string InName = "스켈레톤", int InHealth = 50, int InHealthMax = 50, int InAttackPowerMin = 8, int InAttackPowerMax = 15);
+	virtual ~Skeleton();
+
+	virtual void Initialize() override;
+	virtual int ApplyDamage(Actor& InActor) override;
+	virtual int TakeDamage(int Damage) override;
+
+protected:
+
+private:
+	const int SkeletonHealthMax = 50;
+
+};
 
 
 
 /*
-구 struct 버전 코드
+//구 struct 버전 코드
 struct MazeEnemy
 {
 	std::string Name = "고블린";
@@ -118,4 +157,4 @@ struct MazeEnemy
 	}
 
 };
-*/
+//*/
