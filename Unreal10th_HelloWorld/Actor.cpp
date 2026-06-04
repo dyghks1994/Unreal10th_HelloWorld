@@ -19,6 +19,8 @@ Actor::Actor()
 	, HealthMax(0)
 	, AttackPowerMin(0)
 	, AttackPowerMax(0)
+	, CriticalRate(0.0f)
+	, CriticalStrikeMultiplier(1.0f)
 {
 }
 
@@ -29,6 +31,8 @@ Actor::Actor(Position InPos, std::string InName, int InHealth, int InHealthMax, 
 	, HealthMax(InHealthMax)
 	, AttackPowerMin(InAttackPowerMin)
 	, AttackPowerMax(InAttackPowerMax)
+	, CriticalRate(0.0f)
+	, CriticalStrikeMultiplier(1.0f)
 {
 }
 
@@ -45,3 +49,4 @@ int Actor::TakeDamage(int Damage)
 {
 	return 0;
 }
+

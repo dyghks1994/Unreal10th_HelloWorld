@@ -64,6 +64,7 @@ public:
     inline int GetAttackPowerMax() { return AttackPowerMax; }
     inline void SetAttackPowerMax(const int InAttackPowerMax) { AttackPowerMax = InAttackPowerMax; }
 
+    inline bool IsAlive() { return Health > 0; }
     
 	virtual int ApplyDamage(Actor& InActor);
 	virtual int TakeDamage(int Damage);
@@ -76,7 +77,8 @@ protected:
     int HealthMax;
 	int AttackPowerMin;
 	int AttackPowerMax;
-
+    float CriticalRate;
+    float CriticalStrikeMultiplier;
 
 private:
 

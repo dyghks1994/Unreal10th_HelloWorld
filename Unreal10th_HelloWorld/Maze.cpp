@@ -346,26 +346,32 @@ RandomIncounterType RandomIncounter()
 
 bool Battle(Player& InPlayer)
 {
-    const float CriticalRate = 0.1f;
-
     // 랜덤으로　몬스터 생성
-    Monster* Monster = nullptr;
-    int RandomNum = GetRandomRange(1, 3);
-    switch (RandomNum)
+    enum MonsterType
     {
-        case 1:
+        SlimeType = 0,
+        OrcType,
+        SkeletonType,
+        NUM_OF_MONSTER_TYPE
+    };
+
+    MonsterType Type = static_cast<MonsterType>((GetRandomRange(0, NUM_OF_MONSTER_TYPE - 1)));
+    Monster* Monster = nullptr;
+    switch (Type)
+    {
+        case SlimeType:
         {
             Monster = new Slime();
             break;
         }
 
-        case 2:
+        case OrcType:
         {
             Monster = new Orc();
             break;
         }
 
-        case 3:
+        case SkeletonType:
         {
             Monster = new Skeleton();
             break;
@@ -376,7 +382,7 @@ bool Battle(Player& InPlayer)
     printf("[%s]이 나타났다!! 전투 시작!\n", Monster->GetName().c_str());
 
     int Turn = 1;
-    while (InPlayer.GetHealth() > 0 && Monster->GetHealth() > 0)
+    while (InPlayer.IsAlive() && Monster->IsAlive())
     {
         // 전투 턴 진행
         printf("------------턴 %d------------\n", Turn);
@@ -385,7 +391,7 @@ bool Battle(Player& InPlayer)
        
         printf("당신의 공격 : %d의 데미지를 주었다.\n", InPlayer.ApplyDamage(*Monster));
         
-        if (Monster->GetHealth() > 0)
+        if (Monster->IsAlive())
         {
             printf("적의 공격 : %d의 데미지를 받았다.\n", Monster->ApplyDamage(InPlayer));
         }
@@ -398,7 +404,7 @@ bool Battle(Player& InPlayer)
     delete Monster;
     Monster = nullptr;
 
-    return InPlayer.GetHealth() > 0;    // 플레이어의 체력이 남은채 while이 끝났으면 플레이어가 이긴것
+    return InPlayer.IsAlive();    // 플레이어의 살아있으면 플레이어가 이긴것
 }
 
 void Heal(Player& InPlayer)

@@ -18,6 +18,7 @@ public:
 
 
 protected:
+    std::string Name;
     int Money;
 
 private:

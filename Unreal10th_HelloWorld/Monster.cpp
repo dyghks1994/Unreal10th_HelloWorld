@@ -55,6 +55,10 @@ void Slime::Initialize()
 	AttackPowerMin = 2;
 	AttackPowerMax = 5;
 
+	// 크리티컬 설정
+	CriticalRate = 0.2f;
+	CriticalStrikeMultiplier = 1.3f;
+
 	// 보상 설정
 	Reward = GetRandomRange(1, 10);
 }
@@ -62,6 +66,11 @@ void Slime::Initialize()
 int Slime::ApplyDamage(Actor& InActor)
 {
 	int Damage = GetRandomRange(AttackPowerMin, AttackPowerMax);
+	if (GetRandom() < CriticalRate)
+	{
+		Damage = static_cast<int>(Damage * CriticalStrikeMultiplier);
+	}
+
 	return InActor.TakeDamage(Damage);
 }
 
@@ -109,6 +118,10 @@ void Orc::Initialize()
 	AttackPowerMin = 5;
 	AttackPowerMax = 10;
 
+	// 크리티컬 설정
+	CriticalRate = 0.2f;
+	CriticalStrikeMultiplier = 1.4f;
+
 	// 보상 설정
 	Reward = GetRandomRange(10, 30);
 }
@@ -116,6 +129,11 @@ void Orc::Initialize()
 int Orc::ApplyDamage(Actor& InActor)
 {
 	int Damage = GetRandomRange(AttackPowerMin, AttackPowerMax);
+	if (GetRandom() < CriticalRate)
+	{
+		Damage = static_cast<int>(Damage * CriticalStrikeMultiplier);
+	}
+
 	return InActor.TakeDamage(Damage);
 }
 
@@ -162,6 +180,10 @@ void Skeleton::Initialize()
 	AttackPowerMin = 8;
 	AttackPowerMax = 15;
 
+	// 크리티컬 설정
+	CriticalRate = 0.2f; 
+	CriticalStrikeMultiplier = 1.5f;
+
 	// 보상 설정
 	Reward = GetRandomRange(30, 50);
 }
@@ -169,6 +191,11 @@ void Skeleton::Initialize()
 int Skeleton::ApplyDamage(Actor& InActor)
 {
 	int Damage = GetRandomRange(AttackPowerMin, AttackPowerMax);
+	if (GetRandom() < CriticalRate)
+	{
+		Damage = static_cast<int>(Damage * CriticalStrikeMultiplier);
+	}
+
 	return InActor.TakeDamage(Damage);
 }
 
