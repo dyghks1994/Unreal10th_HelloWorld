@@ -14,6 +14,7 @@
 #include "Day0528.h"
 #include "Day0529.h"
 #include "Day0602.h"
+#include "Day0605.h"
 
 #include "Maze.h"
 
@@ -46,13 +47,19 @@ int main()
 		//Day0527();
 		//Day0528();
 		//Day0529();
+	
+		//Day0602();
+		
+		Day0605 day0605;
+		//day0605.Test();
+		//day0605.EnumClass();
+		day0605.TestDArray();
 	}
-	//Day0602();
 
-	Maze_Run();
 
-	
-	
+
+	//Maze_Run();
+
 }
 
 // 프로그램 실행: <Ctrl+F5> 또는 [디버그] > [디버깅하지 않고 시작] 메뉴

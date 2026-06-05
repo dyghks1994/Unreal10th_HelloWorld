@@ -25,6 +25,9 @@
     <Filter Include="Maze\Actor">
       <UniqueIdentifier>{8e514f30-3c5b-40cf-91bc-f076e8e5e634}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DataStructure">
+      <UniqueIdentifier>{4a233656-93d7-4726-a239-06778afe3706}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Unreal10th_HelloWorld.cpp">
@@ -80,6 +83,15 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Maze\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Day0605.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="LinkedList.cpp">
+      <Filter>DataStructure</Filter>
+    </ClCompile>
+    <ClCompile Include="DArray.cpp">
+      <Filter>DataStructure</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +163,15 @@
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Maze\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Day0605.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="LinkedList.h">
+      <Filter>DataStructure</Filter>
+    </ClInclude>
+    <ClInclude Include="DArray.h">
+      <Filter>DataStructure</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
