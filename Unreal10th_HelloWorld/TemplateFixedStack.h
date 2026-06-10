@@ -1,16 +1,43 @@
-#include "CircularQueue.h"
 #pragma once
 
+template <typename T>
 class FixedStack {
 public:
     // 스택에 원소를 추가합니다.
-    void Push(int value);
+    void Push(T InValue)
+    {
+        if (IsFull())
+        {
+            printf("오류: 스택이 꽉 찼습니다! (Stack Overflow)\n");
+            return;
+        }
+        TopIndex++;
+        Data[TopIndex] = InValue;
+    }
 
     // 스택에서 원소를 제거합니다.
-    int Pop();
+    T Pop()
+    {
+        if (IsEmpty())
+        {
+            printf("오류: 스택이 비어있습니다! (Stack Underflow)\n");
+            return Empty;
+        }
+        T Result = Data[TopIndex];
+        TopIndex--;
+        return Result;
+    }
 
     // 스택의 최상단 원소를 확인합니다.
-    int Top();
+    T Top()
+    {
+        if (IsEmpty())
+        {
+            printf("오류: 스택이 비어있습니다! 값을 반환할 수 없습니다.\n");
+            return Empty;
+        }
+        return Data[TopIndex];
+    }
 
     // 스택이 꽉 찼는지 확인합니다.
     inline bool IsFull() const { return TopIndex == (StackCapacity - 1); }
@@ -28,7 +55,7 @@ private:
     static constexpr int Empty = -1;
 
     // 데이터를 저장하는 배열
-    int Data[StackCapacity];
+    T Data[StackCapacity];
     // 스택의 최상단을 가리키는 인덱스
     int TopIndex = Empty;
 };

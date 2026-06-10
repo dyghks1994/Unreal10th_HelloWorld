@@ -15,6 +15,12 @@ public:
 
     void TestMap();
 
+    void TestIntTemplateListNode();
+    void TestFloatTemplateListNode();
+
+    void TestIntTemplateFixedStack();
+    void TestFloatTemplateFixedStack();
+
 };
 
 // 간단실습

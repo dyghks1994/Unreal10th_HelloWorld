@@ -80,73 +80,97 @@ void LinkedList::InsertAt(int InData, int InPosition)
 
 void LinkedList::Remove(int InData)
 {
+    if (Head == nullptr)
+        return;
+
     // InData를 가진 노드가 있는지 Head부터 찾는다.
-    // 찾은 노드의 앞에 있는 노드의 Next를 찾은 노드의 Next에 저장된 주소로 변경한다.
-    // 찾은 노드를 delete
+    ListNode* NodeToDelete = nullptr;
+    ListNode* PrevNode = nullptr;
 
-    // 맨 앞과 뒤일 때 처리. 없는 경우에 대한 처리
-    
-    ListNode* CurNode = Head;
-
-    while (CurNode != nullptr)
+    if (Head->Data == InData)
     {
+        NodeToDelete = Head;
+        Head = Head->Next;
+        if (Head == nullptr)
+        {
+            Tail = nullptr;
+        }
+    }
+    else
+    {
+        PrevNode = Head;
+        while (PrevNode->Next != nullptr && PrevNode->Next->Data != InData)
+        {
+            // 찾는 데이터를 가진 노드의 앞노드 찾기
+            PrevNode = PrevNode->Next;
+        }
 
+        if (PrevNode->Next != nullptr)
+        {
+            // 찾은 노드의 앞에 있는 노드의 Next를 찾은 노드의 Next에 저장된 주소로 변경한다.
+            NodeToDelete = PrevNode->Next;
+            PrevNode->Next = NodeToDelete->Next;
+            if (NodeToDelete == Tail)
+            {
+                Tail = PrevNode;
+            }
+        }
     }
 
+    if (NodeToDelete != nullptr)
+    {
+        // 찾은 노드를 delete
+        delete NodeToDelete;
+        NodeToDelete = nullptr;
+        Size--;
+    }
+    else
+    {
+        printf("오류 : %d 값을 가진 노드가 없습니다.\n", InData);
+    }
 }
 
 void LinkedList::RemoveAt(int InPosition)
 {
     if (InPosition >= Size)
     {
-        printf("오류 : %d 위치는 리스트의 범위를 벗어납니다.(현재 크기:%d)", InPosition, Size);
-        return;
+        printf("오류 : %d 위치는 리스트의 범위를 벗어납니다.(현재 크기:%d)\n", InPosition, Size);
+        return;     //위치가 없는 경우는 그냥 종료
     }
 
     ListNode* NodeToDelete = nullptr;
     if (InPosition == 0)
     {
-        // 특수처리
+        // 특수 처리(맨 앞이다)
         NodeToDelete = Head;
         Head = Head->Next;
-
         if (Head == nullptr)
         {
             Tail = nullptr;
         }
-        
     }
-
     else
     {
         // 위치 찾기
-        // 찾은 노드 앞 노드의 Next를 찾은 노드의 Next로 변경
-        // 찾은 노드 delete
-
-        // 맨 앞과 뒤일 때 처리. 위치가 없는 경우는 그냥 종료
         ListNode* PrevNode = Head;
-        int TargetIndex = InPosition - 1;
-
-        for (int i = 0; i < TargetIndex; i++)   // 지울 노드의 앞쪽 노드(Prev)까지 가기 위해서
+        int TargetIndex = InPosition - 1;       // 지울 노드의 앞쪽노드(PrevNode)까지 가기 위해서
+        for (int i = 0; i < TargetIndex; i++)
         {
-            PrevNode = PrevNode->Next;  
+            PrevNode = PrevNode->Next;
         }
         NodeToDelete = PrevNode->Next;
-        PrevNode->Next = NodeToDelete->Next;
-
+        PrevNode->Next = NodeToDelete->Next;    // 찾은 노드 앞 노드의 Next를 찾은 노드의 Next로 변경
         if (NodeToDelete == Tail)
         {
-            PrevNode->Next = nullptr;   
+            //PrevNode->Next = nullptr;
             Tail = PrevNode;
-            // Tail->next = nullptr;
+            Tail->Next = nullptr;
         }
     }
-
     // 찾은 노드 delete
     delete NodeToDelete;
     NodeToDelete = nullptr;
     Size--;
-    
 }
 
 ListNode* LinkedList::Search(int InData) const
