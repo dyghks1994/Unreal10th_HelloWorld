@@ -1,5 +1,6 @@
 #include <iostream>
 #include "LinkedList.h"
+#include "TemplateListNode.h"
 
 LinkedList::~LinkedList()
 {

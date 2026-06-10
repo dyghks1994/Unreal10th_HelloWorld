@@ -125,6 +125,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="BST.cpp" />
+    <ClCompile Include="CircularQueue.cpp" />
     <ClCompile Include="DArray.cpp" />
     <ClCompile Include="Day0521_2.cpp" />
     <ClCompile Include="Day0521_FunctionDice.cpp" />
@@ -137,6 +139,8 @@
     <ClCompile Include="Day0529.cpp" />
     <ClCompile Include="Day0602.cpp" />
     <ClCompile Include="Day0605.cpp" />
+    <ClCompile Include="Day0610.cpp" />
+    <ClCompile Include="FixedStack.cpp" />
     <ClCompile Include="LinkedList.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="Maze.cpp" />
@@ -148,6 +152,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
+    <ClInclude Include="BST.h" />
+    <ClInclude Include="BitFlag.h" />
+    <ClInclude Include="CircularQueue.h" />
+    <ClInclude Include="Coordinate.h" />
     <ClInclude Include="DArray.h" />
     <ClInclude Include="Day0515.h" />
     <ClInclude Include="Day0518.h" />
@@ -165,11 +173,14 @@
     <ClInclude Include="Day0529.h" />
     <ClInclude Include="Day0602.h" />
     <ClInclude Include="Day0605.h" />
+    <ClInclude Include="Day0610.h" />
+    <ClInclude Include="FixedStack.h" />
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Maze.h" />
     <ClInclude Include="MazeCommon.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="TemplateListNode.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Weekend0530.h" />
     <ClInclude Include="Weekend0523.h" />
