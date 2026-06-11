@@ -2,8 +2,9 @@
 #include <stack>
 #include <queue>
 #include <string>
-#include "Day0609.h"
+#include "CircularQueue.h"
 #include "FixedStack.h"
+#include "Day0609.h"
 
 void Day0609::Day0609_Main()
 {

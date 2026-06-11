@@ -17,6 +17,7 @@
 #include "Day0605.h"
 #include "Day0609.h"
 #include "Day0610.h"
+#include "Day0611.h"
 
 #include "Maze.h"
 
@@ -61,8 +62,11 @@ int main()
 	//Day0609 day0609;
 	//day0609.Day0609_Main();
 
-	Day0610 day0610;
-	day0610.TestMain();
+	//Day0610 day0610;
+	//day0610.TestMain();
+
+	Day0611 day0611;
+	day0611.Day0611_Main();
 
 	//Maze_Run();
 
